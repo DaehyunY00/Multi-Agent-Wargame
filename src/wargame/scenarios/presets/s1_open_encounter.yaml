@@ -1,0 +1,65 @@
+id: s1_open_encounter
+name: Open Encounter
+description: Flat-terrain meeting engagement around a central crossroads.
+map:
+  width: 20
+  height: 15
+terrain:
+  - q: 8
+    r: 6
+    type: forest
+  - q: 8
+    r: 7
+    type: forest
+  - q: 9
+    r: 7
+    type: urban
+  - q: 10
+    r: 7
+    type: urban
+  - q: 11
+    r: 7
+    type: forest
+forces:
+  - unit_id: blue-a
+    faction: blue
+    position: {q: 4, r: 6}
+    strength: 110
+    posture: maneuver
+  - unit_id: blue-b
+    faction: blue
+    position: {q: 4, r: 8}
+    strength: 100
+    posture: defend
+  - unit_id: blue-c
+    faction: blue
+    position: {q: 5, r: 7}
+    strength: 90
+    posture: attack
+  - unit_id: red-a
+    faction: red
+    position: {q: 14, r: 6}
+    strength: 110
+    posture: maneuver
+  - unit_id: red-b
+    faction: red
+    position: {q: 14, r: 8}
+    strength: 100
+    posture: defend
+  - unit_id: red-c
+    faction: red
+    position: {q: 13, r: 7}
+    strength: 90
+    posture: attack
+objectives:
+  - faction: blue
+    description: Secure the urban crossroads around hex (10,7).
+    target_hex: {q: 10, r: 7}
+    priority: 1
+  - faction: red
+    description: Deny blue access to the crossroads and retain local combat power.
+    target_hex: {q: 10, r: 7}
+    priority: 1
+max_turns: 12
+metadata:
+  tags: ["meeting_engagement", "baseline"]

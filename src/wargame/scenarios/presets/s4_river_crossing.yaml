@@ -1,0 +1,71 @@
+id: s4_river_crossing
+name: River Crossing
+description: Blue must cross a defended river line and secure the far bank.
+map:
+  width: 20
+  height: 15
+terrain:
+  - q: 9
+    r: 4
+    type: river
+  - q: 9
+    r: 5
+    type: river
+  - q: 9
+    r: 6
+    type: river
+  - q: 9
+    r: 7
+    type: river
+  - q: 9
+    r: 8
+    type: river
+  - q: 10
+    r: 6
+    type: forest
+  - q: 11
+    r: 6
+    type: urban
+forces:
+  - unit_id: blue-bridgehead
+    faction: blue
+    position: {q: 6, r: 6}
+    strength: 120
+    posture: attack
+  - unit_id: blue-support
+    faction: blue
+    position: {q: 6, r: 8}
+    strength: 100
+    posture: support
+  - unit_id: blue-screen
+    faction: blue
+    position: {q: 5, r: 7}
+    strength: 85
+    posture: maneuver
+  - unit_id: red-riverline
+    faction: red
+    position: {q: 10, r: 6}
+    strength: 115
+    posture: defend
+  - unit_id: red-town
+    faction: red
+    position: {q: 11, r: 6}
+    strength: 95
+    posture: defend
+  - unit_id: red-reserve
+    faction: red
+    position: {q: 12, r: 8}
+    strength: 90
+    posture: maneuver
+objectives:
+  - faction: blue
+    description: Establish a bridgehead across the river at hex (10,6).
+    target_hex: {q: 10, r: 6}
+    priority: 1
+  - faction: red
+    description: Prevent a blue crossing and hold the far bank.
+    target_hex: {q: 10, r: 6}
+    priority: 1
+max_turns: 14
+metadata:
+  tags: ["river", "crossing_operation"]

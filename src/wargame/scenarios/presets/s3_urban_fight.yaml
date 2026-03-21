@@ -1,0 +1,80 @@
+id: s3_urban_fight
+name: Urban Fight
+description: Both factions contest dense urban blocks and key intersections.
+map:
+  width: 20
+  height: 15
+terrain:
+  - q: 8
+    r: 6
+    type: urban
+  - q: 8
+    r: 7
+    type: urban
+  - q: 9
+    r: 6
+    type: urban
+  - q: 9
+    r: 7
+    type: urban
+  - q: 10
+    r: 6
+    type: urban
+  - q: 10
+    r: 7
+    type: urban
+  - q: 11
+    r: 6
+    type: urban
+  - q: 11
+    r: 7
+    type: urban
+  - q: 9
+    r: 5
+    type: forest
+  - q: 10
+    r: 8
+    type: forest
+forces:
+  - unit_id: blue-west
+    faction: blue
+    position: {q: 6, r: 6}
+    strength: 105
+    posture: maneuver
+  - unit_id: blue-south
+    faction: blue
+    position: {q: 7, r: 8}
+    strength: 95
+    posture: defend
+  - unit_id: blue-center
+    faction: blue
+    position: {q: 7, r: 7}
+    strength: 100
+    posture: attack
+  - unit_id: red-east
+    faction: red
+    position: {q: 13, r: 6}
+    strength: 105
+    posture: maneuver
+  - unit_id: red-north
+    faction: red
+    position: {q: 12, r: 5}
+    strength: 95
+    posture: defend
+  - unit_id: red-center
+    faction: red
+    position: {q: 12, r: 7}
+    strength: 100
+    posture: attack
+objectives:
+  - faction: blue
+    description: Control the central urban block at hex (10,7).
+    target_hex: {q: 10, r: 7}
+    priority: 1
+  - faction: red
+    description: Hold the central urban block and prevent blue penetration.
+    target_hex: {q: 10, r: 7}
+    priority: 1
+max_turns: 12
+metadata:
+  tags: ["urban", "close_combat"]

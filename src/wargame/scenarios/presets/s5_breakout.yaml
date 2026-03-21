@@ -1,0 +1,65 @@
+id: s5_breakout
+name: Breakout
+description: Blue attempts to break through a loose encirclement to the east.
+map:
+  width: 20
+  height: 15
+terrain:
+  - q: 7
+    r: 6
+    type: forest
+  - q: 7
+    r: 7
+    type: forest
+  - q: 8
+    r: 7
+    type: urban
+  - q: 12
+    r: 7
+    type: forest
+  - q: 13
+    r: 7
+    type: forest
+forces:
+  - unit_id: blue-spearhead
+    faction: blue
+    position: {q: 6, r: 7}
+    strength: 125
+    posture: attack
+  - unit_id: blue-guard
+    faction: blue
+    position: {q: 5, r: 6}
+    strength: 95
+    posture: defend
+  - unit_id: blue-rear
+    faction: blue
+    position: {q: 5, r: 8}
+    strength: 85
+    posture: maneuver
+  - unit_id: red-block
+    faction: red
+    position: {q: 10, r: 7}
+    strength: 110
+    posture: defend
+  - unit_id: red-north
+    faction: red
+    position: {q: 9, r: 5}
+    strength: 85
+    posture: maneuver
+  - unit_id: red-south
+    faction: red
+    position: {q: 9, r: 9}
+    strength: 85
+    posture: maneuver
+objectives:
+  - faction: blue
+    description: Break out toward the eastern corridor and reach hex (13,7).
+    target_hex: {q: 13, r: 7}
+    priority: 1
+  - faction: red
+    description: Seal the corridor and destroy the breakout force.
+    target_hex: {q: 10, r: 7}
+    priority: 1
+max_turns: 13
+metadata:
+  tags: ["breakout", "maneuver"]

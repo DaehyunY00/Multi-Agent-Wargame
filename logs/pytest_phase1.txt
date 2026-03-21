@@ -1,0 +1,48 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.5, pytest-9.0.2, pluggy-1.5.0 -- /Users/daehyunyoo/miniconda3/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/daehyunyoo/Library/CloudStorage/GoogleDrive-dhyoo970111@gmail.com/내 드라이브/Multi-Agent_Wargame
+configfile: pyproject.toml
+plugins: anyio-4.10.0, typeguard-4.5.1, langsmith-0.6.6
+collecting ... collected 38 items
+
+tests/test_action_parser.py::test_valid_action_payload_is_normalized_into_commands PASSED [  2%]
+tests/test_action_parser.py::test_invalid_hex_is_rejected PASSED         [  5%]
+tests/test_action_parser.py::test_unknown_unit_is_rejected PASSED        [  7%]
+tests/test_action_parser.py::test_malformed_json_can_be_mapped_to_safe_fallback_plan PASSED [ 10%]
+tests/test_baseline_agents.py::test_script_agent_presets_produce_valid_actions PASSED [ 13%]
+tests/test_baseline_agents.py::test_rule_based_agent_is_deterministic_for_fixed_seed PASSED [ 15%]
+tests/test_baseline_agents.py::test_random_agent_samples_only_valid_actions PASSED [ 18%]
+tests/test_cli_scripts.py::test_single_game_and_evaluate_logs_scripts_run PASSED [ 21%]
+tests/test_experiments.py::test_experiment_runner_applies_seed_hook_and_logs_context PASSED [ 23%]
+tests/test_experiments.py::test_experiment_runner_auto_seeding_logs_seed_bundle PASSED [ 26%]
+tests/test_fog_of_war.py::test_get_state_returns_visible_and_hidden_enemy_information PASSED [ 28%]
+tests/test_fog_of_war.py::test_detected_enemy_supports_uncertain_observations PASSED [ 31%]
+tests/test_fog_of_war.py::test_state_snapshots_are_stable_and_separate_from_internal_state PASSED [ 34%]
+tests/test_fog_of_war.py::test_turn_counter_behavior_updates_metadata PASSED [ 36%]
+tests/test_hexgrid.py::test_center_hex_has_six_neighbors PASSED          [ 39%]
+tests/test_hexgrid.py::test_corner_hex_has_two_neighbors PASSED          [ 42%]
+tests/test_hexgrid.py::test_hex_distance_is_symmetric PASSED             [ 44%]
+tests/test_lanchester.py::test_symmetric_case_produces_symmetric_losses PASSED [ 47%]
+tests/test_lanchester.py::test_terrain_modifier_reduces_incoming_losses PASSED [ 50%]
+tests/test_lanchester.py::test_deterministic_resolution_is_reproducible PASSED [ 52%]
+tests/test_lanchester.py::test_stochastic_resolution_is_reproducible_with_fixed_seed PASSED [ 55%]
+tests/test_lanchester.py::test_losses_are_clamped_to_available_strength PASSED [ 57%]
+tests/test_local_llm_agent.py::test_prompt_registry_exposes_blue_red_and_white_roles PASSED [ 60%]
+tests/test_local_llm_agent.py::test_local_llm_agent_uses_fake_backend_and_parses_actions PASSED [ 63%]
+tests/test_local_llm_agent.py::test_agent_fallback_exposes_errors_in_metadata PASSED [ 65%]
+tests/test_local_llm_agent.py::test_agent_can_raise_when_fallback_is_disabled PASSED [ 68%]
+tests/test_local_llm_agent.py::test_extract_json_object_recovers_balanced_object_from_wrapped_output PASSED [ 71%]
+tests/test_metrics.py::test_action_entropy_reads_from_jsonl_logs PASSED  [ 73%]
+tests/test_metrics.py::test_escalation_sensitivity_index_tracks_turn_to_turn_volatility PASSED [ 76%]
+tests/test_metrics.py::test_win_rate_uses_final_logged_force_totals PASSED [ 78%]
+tests/test_models.py::test_core_dataclasses_construct_with_expected_values PASSED [ 81%]
+tests/test_scenarios.py::test_preset_scenario_loads_into_game_state PASSED [ 84%]
+tests/test_simulation_engine.py::test_attack_does_not_move_and_only_engaged_units_take_losses PASSED [ 86%]
+tests/test_simulation_engine.py::test_stochastic_combat_is_reproducible_when_engine_seed_is_fixed PASSED [ 89%]
+tests/test_state_to_text.py::test_state_to_text_renders_stable_tactical_report_shape PASSED [ 92%]
+tests/test_terrain.py::test_default_terrain_lookup_returns_explicit_values PASSED [ 94%]
+tests/test_turn_loop.py::test_turn_loop_runs_end_to_end_and_writes_jsonl PASSED [ 97%]
+tests/test_turn_loop.py::test_turn_loop_records_white_cell_scores PASSED [100%]
+
+============================== 38 passed in 0.17s ==============================

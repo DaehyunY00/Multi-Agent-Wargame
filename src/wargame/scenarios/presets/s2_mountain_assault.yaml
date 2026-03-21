@@ -1,0 +1,71 @@
+id: s2_mountain_assault
+name: Mountain Assault
+description: Blue attacks a defended ridgeline held by red forces.
+map:
+  width: 20
+  height: 15
+terrain:
+  - q: 9
+    r: 5
+    type: mountain
+  - q: 9
+    r: 6
+    type: mountain
+  - q: 10
+    r: 6
+    type: mountain
+  - q: 10
+    r: 7
+    type: mountain
+  - q: 11
+    r: 7
+    type: mountain
+  - q: 8
+    r: 7
+    type: forest
+  - q: 12
+    r: 6
+    type: forest
+forces:
+  - unit_id: blue-assault
+    faction: blue
+    position: {q: 5, r: 6}
+    strength: 130
+    posture: attack
+  - unit_id: blue-support
+    faction: blue
+    position: {q: 5, r: 8}
+    strength: 100
+    posture: support
+  - unit_id: blue-reserve
+    faction: blue
+    position: {q: 4, r: 7}
+    strength: 95
+    posture: maneuver
+  - unit_id: red-ridge
+    faction: red
+    position: {q: 10, r: 6}
+    strength: 120
+    posture: defend
+  - unit_id: red-flank
+    faction: red
+    position: {q: 11, r: 7}
+    strength: 90
+    posture: defend
+  - unit_id: red-reserve
+    faction: red
+    position: {q: 13, r: 6}
+    strength: 100
+    posture: maneuver
+objectives:
+  - faction: blue
+    description: Seize the ridgeline crest at hex (10,6).
+    target_hex: {q: 10, r: 6}
+    priority: 1
+  - faction: red
+    description: Hold the mountain ridge and attrit the attacking force.
+    target_hex: {q: 10, r: 6}
+    priority: 1
+max_turns: 14
+metadata:
+  tags: ["assault", "terrain_defense"]
