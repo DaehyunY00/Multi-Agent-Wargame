@@ -40,6 +40,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--white-cell", default="heuristic")
     parser.add_argument("--stochastic-combat", action="store_true")
     parser.add_argument("--noise-std", type=float, default=0.1)
+    parser.add_argument("--visibility-radius", type=int, default=3)
+    parser.add_argument("--identification-radius", type=int, default=1)
+    parser.add_argument("--temperature", type=float, default=0.7)
+    parser.add_argument("--max-tokens", type=int, default=512)
+    parser.add_argument("--context-window", type=int, default=2048)
+    parser.add_argument("--backend", choices=["auto", "mlx", "vllm"], default="auto")
     args = parser.parse_args(list(argv) if argv is not None else None)
 
     scenarios = [load_scenario(_resolve_scenario_path(item)) for item in args.scenario]
@@ -56,6 +62,12 @@ def main(argv: Sequence[str] | None = None) -> int:
             white_cell_spec=args.white_cell,
             stochastic_combat=args.stochastic_combat,
             noise_std=args.noise_std,
+            visibility_radius=args.visibility_radius,
+            identification_radius=args.identification_radius,
+            temperature=args.temperature,
+            max_tokens=args.max_tokens,
+            context_window=args.context_window,
+            backend=args.backend,
         ),
     )
     results = batch.run()
@@ -90,23 +102,39 @@ def _parse_matchup(value: str) -> MatchupSpec:
     )
 
 
-def _build_runner(*, condition, white_cell_spec: str, stochastic_combat: bool, noise_std: float) -> ExperimentRunner:
+def _build_runner(
+    *,
+    condition,
+    white_cell_spec: str,
+    stochastic_combat: bool,
+    noise_std: float,
+    visibility_radius: int = 3,
+    identification_radius: int = 1,
+    temperature: float = 0.7,
+    max_tokens: int = 512,
+    context_window: int = 2048,
+    backend: str = "auto",
+) -> ExperimentRunner:
     """Build one ExperimentRunner for a batch matrix condition."""
 
     scenario = condition.scenario
     grid = build_grid(scenario)
-    fog = FogOfWarFilter()
+    fog = FogOfWarFilter(
+        visibility_radius=visibility_radius,
+        identification_radius=identification_radius,
+    )
     engine = SimulationEngine(
         state_manager=StateManager(initial_state=scenario_to_game_state(scenario), fog_of_war=fog),
         combat_resolver=LanchesterResolver(LanchesterConfig(stochastic=stochastic_combat, noise_std=noise_std)),
         fog_of_war=fog,
         grid=grid,
     )
+    agent_kwargs = dict(temperature=temperature, max_tokens=max_tokens, context_window=context_window, backend=backend)
     logger = JsonlLogger(path=condition.log_path or Path(f"{condition.run_id}.jsonl"))
     loop = TurnLoop(
         engine=engine,
-        blue_agent=_build_agent(condition.matchup.blue_agent_name, faction=Faction.BLUE, grid=grid),
-        red_agent=_build_agent(condition.matchup.red_agent_name, faction=Faction.RED, grid=grid),
+        blue_agent=_build_agent(condition.matchup.blue_agent_name, faction=Faction.BLUE, grid=grid, **agent_kwargs),
+        red_agent=_build_agent(condition.matchup.red_agent_name, faction=Faction.RED, grid=grid, **agent_kwargs),
         renderer=StateRenderer(),
         parser=ActionParser(grid=grid),
         white_cell=_build_white_cell(white_cell_spec),

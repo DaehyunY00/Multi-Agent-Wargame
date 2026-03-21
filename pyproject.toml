@@ -12,6 +12,8 @@ dependencies = ["PyYAML>=6.0"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
+analysis = ["scipy>=1.11", "numpy>=1.24"]
+plots = ["matplotlib>=3.7", "numpy>=1.24"]
 
 [tool.setuptools]
 package-dir = {"" = "src"}

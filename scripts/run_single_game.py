@@ -13,8 +13,11 @@ if __package__ in {None, ""}:
 
 from wargame.agents import (  # noqa: E402
     ActionParser,
+    BlueAgent,
     HeuristicWhiteCellAgent,
+    LocalLLMConfig,
     RandomAgent,
+    RedAgent,
     RuleBasedAgent,
     ScriptAgent,
     ScriptBehavior,
@@ -43,6 +46,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--identification-radius", type=int, default=1)
     parser.add_argument("--stochastic-combat", action="store_true")
     parser.add_argument("--noise-std", type=float, default=0.1)
+    parser.add_argument("--temperature", type=float, default=0.7)
+    parser.add_argument("--max-tokens", type=int, default=512)
+    parser.add_argument("--context-window", type=int, default=2048)
+    parser.add_argument("--backend", choices=["auto", "mlx", "vllm"], default="auto")
     args = parser.parse_args(list(argv) if argv is not None else None)
 
     scenario = load_scenario(_resolve_scenario_path(args.scenario))
@@ -63,8 +70,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     logger = JsonlLogger(path=args.output)
     loop = TurnLoop(
         engine=engine,
-        blue_agent=_build_agent(args.blue_agent, faction=Faction.BLUE, grid=grid),
-        red_agent=_build_agent(args.red_agent, faction=Faction.RED, grid=grid),
+        blue_agent=_build_agent(args.blue_agent, faction=Faction.BLUE, grid=grid, temperature=args.temperature, max_tokens=args.max_tokens, context_window=args.context_window, backend=args.backend),
+        red_agent=_build_agent(args.red_agent, faction=Faction.RED, grid=grid, temperature=args.temperature, max_tokens=args.max_tokens, context_window=args.context_window, backend=args.backend),
         renderer=StateRenderer(),
         parser=ActionParser(grid=grid),
         white_cell=_build_white_cell(args.white_cell),
@@ -88,9 +95,22 @@ def main(argv: Sequence[str] | None = None) -> int:
     return 0
 
 
-def _build_agent(spec: str, *, faction: Faction, grid):
-    """Build a baseline agent from a compact CLI spec."""
+def _build_agent(
+    spec: str,
+    *,
+    faction: Faction,
+    grid,
+    temperature: float = 0.7,
+    max_tokens: int = 512,
+    context_window: int = 2048,
+    backend: str = "auto",
+):
+    """Build a baseline or LLM agent from a compact CLI spec.
 
+    Supported specs:
+      rule, random, script, script:<behavior>
+      local_llm:<model_path>
+    """
     normalized = spec.strip().lower()
     if normalized == "rule":
         return RuleBasedAgent(grid=grid, faction=faction, name=f"{faction.value}_rule")
@@ -101,7 +121,44 @@ def _build_agent(spec: str, *, faction: Faction, grid):
     if normalized.startswith("script:"):
         behavior = ScriptBehavior(normalized.split(":", maxsplit=1)[1])
         return ScriptAgent(grid=grid, faction=faction, behavior=behavior, name=f"{faction.value}_{behavior.value}")
+    if normalized.startswith("local_llm:"):
+        model_path = spec.strip()[len("local_llm:"):]
+        llm_backend = _select_backend(model_path, backend)
+        config = LocalLLMConfig(
+            model_name=model_path,
+            temperature=temperature,
+            max_tokens=max_tokens,
+            context_window=context_window,
+        )
+        parser = ActionParser(grid=grid)
+        agent_cls = BlueAgent if faction is Faction.BLUE else RedAgent
+        return agent_cls(backend=llm_backend, config=config, parser=parser)
     raise ValueError(f"Unsupported agent spec: {spec!r}")
+
+
+def _select_backend(model_path: str, backend_hint: str):
+    """Resolve an LLM backend instance from a model path and explicit hint."""
+
+    use_mlx = backend_hint == "mlx" or (
+        backend_hint == "auto" and _looks_like_mlx_model(model_path)
+    )
+    if use_mlx:
+        from wargame.agents.backends import MLXLocalLLMBackend  # noqa: PLC0415
+
+        return MLXLocalLLMBackend(model_path=model_path)
+    if backend_hint == "vllm":
+        from wargame.agents.backends import VLLMLocalLLMBackend  # noqa: PLC0415
+
+        return VLLMLocalLLMBackend(model_path=model_path)
+    raise ValueError(
+        f"Cannot auto-select a backend for {model_path!r}. "
+        "Pass --backend mlx (Apple Silicon) or --backend vllm."
+    )
+
+
+def _looks_like_mlx_model(model_path: str) -> bool:
+    lower = model_path.lower()
+    return "mlx-community/" in lower or lower.startswith("mlx")
 
 
 def _build_white_cell(spec: str):
