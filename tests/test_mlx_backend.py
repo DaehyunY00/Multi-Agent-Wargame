@@ -211,6 +211,12 @@ def test_vllm_backend_is_subclass_of_local_llm_backend() -> None:
     assert isinstance(backend, LocalLLMBackend)
 
 
+def test_vllm_backend_accepts_model_id_alias() -> None:
+    backend = VLLMLocalLLMBackend(model_id="meta-llama/Llama-3.1-8B-Instruct")
+    assert backend.model_id == "meta-llama/Llama-3.1-8B-Instruct"
+    assert backend.model_path == "meta-llama/Llama-3.1-8B-Instruct"
+
+
 def test_vllm_backend_default_parameters() -> None:
     backend = VLLMLocalLLMBackend(model_path="some/model")
     assert backend.quantization is None
@@ -224,18 +230,23 @@ def test_vllm_backend_bitsandbytes_quantization_stored() -> None:
     assert backend.quantization == "bitsandbytes"
 
 
-def test_vllm_backend_raises_import_error_on_generate_when_vllm_missing(
+def test_vllm_backend_returns_empty_output_on_generate_when_vllm_missing(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """generate() must raise ImportError with a helpful message when vllm is absent."""
+    """generate() should fail safely with empty output when vllm is absent."""
     monkeypatch.setitem(sys.modules, "vllm", None)
 
     backend = VLLMLocalLLMBackend(model_path="test-model")
     backend._llm = None  # ensure lazy load triggers
     config = LocalLLMConfig(model_name="test")
 
-    with pytest.raises(ImportError, match="vllm"):
-        backend.generate("hello", config)
+    response = backend.generate("hello", config)
+
+    assert isinstance(response, BackendResponse)
+    assert response.content == ""
+    assert response.metadata["backend"] == "vllm"
+    assert response.metadata["failed"] is True
+    assert "error" in response.metadata
 
 
 def test_vllm_backend_unload_is_safe_when_not_loaded() -> None:
@@ -316,3 +327,38 @@ def test_vllm_backend_generate_with_mock_vllm(monkeypatch: pytest.MonkeyPatch) -
     assert response.metadata["backend"] == "vllm"
     assert response.metadata["model_path"] == "fake/model"
     assert "inference_time_s" in response.metadata
+    assert response.metadata["failed"] is False
+
+
+def test_vllm_backend_generate_returns_text_for_max_tokens_signature(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Compatibility signature should return plain text for simple callers."""
+    import types  # noqa: PLC0415
+
+    fake_vllm = types.SimpleNamespace()
+
+    class FakeSamplingParams:
+        def __init__(self, **_): ...
+
+    class FakeOutput:
+        text = "attack-right-flank"
+
+    class FakeRequestOutput:
+        outputs = [FakeOutput()]
+
+    class FakeLLM:
+        def __init__(self, **_): ...
+
+        def generate(self, prompts, params):
+            return [FakeRequestOutput()]
+
+    fake_vllm.LLM = FakeLLM
+    fake_vllm.SamplingParams = FakeSamplingParams
+    monkeypatch.setitem(sys.modules, "vllm", fake_vllm)
+
+    backend = VLLMLocalLLMBackend(model_id="fake/model")
+
+    response = backend.generate("Describe the situation.", 32)
+
+    assert response == "attack-right-flank"

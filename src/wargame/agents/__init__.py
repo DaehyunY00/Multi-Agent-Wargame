@@ -20,6 +20,7 @@ from .random_agent import RandomAgent
 from .red_agent import RedAgent
 from .rule_agent import RuleAgent, RuleBasedAgent
 from .script_agent import ScriptAgent, ScriptBehavior
+from .script_agents import FlankingManeuverAgent
 from .state_to_text import StateRenderer
 from .white_cell import HeuristicWhiteCellAgent, WhiteCellAgent
 
@@ -33,6 +34,7 @@ __all__ = [
     "ChatTemplateAdapter",
     "DEFAULT_PROMPT_REGISTRY",
     "DefaultChatTemplateAdapter",
+    "FlankingManeuverAgent",
     "LocalLLMAgent",
     "LocalLLMBackend",
     "LocalLLMConfig",

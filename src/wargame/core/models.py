@@ -75,6 +75,7 @@ class ActionCommand:
     target_hex: Position | None = None
     posture: Posture | None = None
     metadata: dict[str, Any] = field(default_factory=dict)
+    terrain_bonus: float = 0.0
 
 
 @dataclass(slots=True)

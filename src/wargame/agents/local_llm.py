@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import logging
 from abc import ABC, abstractmethod
 from collections import deque
 from collections.abc import Collection, Sequence
@@ -67,6 +68,9 @@ class LocalLLMBackend(ABC):
         """Generate model output from a rendered prompt string."""
 
 
+_logger = logging.getLogger(__name__)
+
+
 class ModelOutputError(ValueError):
     """Raised when model output cannot be converted into a JSON action payload."""
 
@@ -121,6 +125,12 @@ class LocalLLMAgent(BaseAgent):
             json_payload = extract_json_object(response.content)
             plan = self.parser.parse(json_payload, valid_unit_ids=set(valid_unit_ids))
         except (ModelOutputError, ActionParseError) as exc:
+            _logger.debug(
+                "Parsing failed (%s: %s) — raw output: %r",
+                type(exc).__name__,
+                exc,
+                response.content,
+            )
             if not self.fallback_on_error:
                 raise
             plan = self.parser.build_fallback_plan(

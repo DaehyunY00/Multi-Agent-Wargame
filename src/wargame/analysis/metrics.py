@@ -10,7 +10,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, TypeAlias
 
-from wargame.core.enums import ActionType, Faction
+from wargame.core.enums import ActionType, Faction, TerrainType
+from wargame.core.terrain import DEFAULT_TERRAIN_MODIFIERS
 
 LogRecord: TypeAlias = dict[str, Any]
 LogSource: TypeAlias = str | Path | Sequence[Mapping[str, Any]]
@@ -131,6 +132,29 @@ def escalation_sensitivity_index(results: LogSource) -> float:
         abs(current - previous)
         for previous, current in zip(turn_scores, turn_scores[1:], strict=False)
     )
+
+
+def tactical_risk_score(log_path: LogSource) -> float:
+    """Estimate mean battlefield risk from force balance, proximity, and terrain.
+
+    The score is computed per turn from serialized state snapshots in the JSONL
+    log. A turn contributes only when both factions have at least one positioned
+    unit with positive strength. For each valid turn:
+
+    - force-ratio risk increases as one side becomes more overmatched
+    - proximity risk increases as opposing units get closer
+    - terrain risk increases on more exposed terrain such as open ground
+
+    The function returns the arithmetic mean across valid turns and falls back
+    to ``0.0`` when no turn provides enough data.
+    """
+
+    turn_scores = [
+        score
+        for record in _sorted_records(_coerce_records(log_path))
+        if (score := _tactical_risk_for_record(record)) is not None
+    ]
+    return _mean(turn_scores)
 
 
 def escalation_index(results: LogSource) -> float:
@@ -287,6 +311,47 @@ def _sorted_records(records: Sequence[LogRecord]) -> list[LogRecord]:
     return sorted(records, key=lambda record: int(record.get("turn", 0)))
 
 
+def _tactical_risk_for_record(record: Mapping[str, Any]) -> float | None:
+    """Compute one turn's tactical risk score from a serialized state."""
+
+    state = record.get("state")
+    if not isinstance(state, Mapping):
+        return None
+
+    units = _units_from_state(state)
+    blue_units = [unit for unit in units if unit["faction"] == Faction.BLUE.value]
+    red_units = [unit for unit in units if unit["faction"] == Faction.RED.value]
+    if not blue_units or not red_units:
+        return None
+
+    blue_total = sum(unit["strength"] for unit in blue_units)
+    red_total = sum(unit["strength"] for unit in red_units)
+    stronger_force = max(blue_total, red_total)
+    if stronger_force <= 0:
+        return None
+
+    force_ratio_risk = 1.0 - (min(blue_total, red_total) / stronger_force)
+    terrain_by_hex = state.get("terrain_by_hex")
+    terrain_lookup = terrain_by_hex if isinstance(terrain_by_hex, Mapping) else {}
+
+    proximity_scores: list[float] = []
+    terrain_scores: list[float] = []
+    for unit in blue_units:
+        proximity_scores.append(
+            _proximity_risk(unit["position"], [enemy["position"] for enemy in red_units])
+        )
+        terrain_scores.append(_terrain_risk(unit["position"], terrain_lookup))
+    for unit in red_units:
+        proximity_scores.append(
+            _proximity_risk(unit["position"], [enemy["position"] for enemy in blue_units])
+        )
+        terrain_scores.append(_terrain_risk(unit["position"], terrain_lookup))
+
+    if not proximity_scores or not terrain_scores:
+        return None
+    return _mean([force_ratio_risk, _mean(proximity_scores), _mean(terrain_scores)])
+
+
 def _iter_actions(record: Mapping[str, Any]) -> list[Mapping[str, Any]]:
     """Yield normalized action dictionaries from one record."""
 
@@ -294,6 +359,37 @@ def _iter_actions(record: Mapping[str, Any]) -> list[Mapping[str, Any]]:
     if not isinstance(raw_actions, list):
         return []
     return [action for action in raw_actions if isinstance(action, Mapping)]
+
+
+def _units_from_state(state: Mapping[str, Any]) -> list[dict[str, Any]]:
+    """Extract positioned unit snapshots from a serialized state mapping."""
+
+    units = state.get("units")
+    if not isinstance(units, Mapping):
+        return []
+
+    normalized: list[dict[str, Any]] = []
+    for unit_id, unit in units.items():
+        if not isinstance(unit_id, str) or not isinstance(unit, Mapping):
+            continue
+        faction = unit.get("faction")
+        strength = unit.get("strength")
+        position = _position_from_mapping(unit.get("position"))
+        if faction not in {Faction.BLUE.value, Faction.RED.value}:
+            continue
+        if not isinstance(strength, (int, float)) or float(strength) <= 0:
+            continue
+        if position is None:
+            continue
+        normalized.append(
+            {
+                "unit_id": unit_id,
+                "faction": faction,
+                "strength": float(strength),
+                "position": position,
+            }
+        )
+    return normalized
 
 
 def _iter_action_types(record: Mapping[str, Any]) -> list[str]:
@@ -318,6 +414,54 @@ def _iter_decisions(record: Mapping[str, Any]) -> list[Mapping[str, Any]]:
         for key in ("blue", "red", "white_cell")
         if isinstance((decision := metadata.get(key)), Mapping)
     ]
+
+
+def _position_from_mapping(value: Any) -> tuple[int, int] | None:
+    """Parse a serialized ``{q, r}`` position payload."""
+
+    if not isinstance(value, Mapping):
+        return None
+    q = value.get("q")
+    r = value.get("r")
+    if not isinstance(q, int) or not isinstance(r, int):
+        return None
+    return q, r
+
+
+def _proximity_risk(
+    start: tuple[int, int],
+    enemy_positions: Sequence[tuple[int, int]],
+) -> float:
+    """Convert nearest-enemy distance into a bounded exposure score."""
+
+    if not enemy_positions:
+        return 0.0
+    nearest_distance = min(_hex_distance(start, enemy) for enemy in enemy_positions)
+    return 1.0 / max(1, nearest_distance)
+
+
+def _terrain_risk(
+    position: tuple[int, int],
+    terrain_by_hex: Mapping[str, Any],
+) -> float:
+    """Estimate local exposure from the terrain occupying one hex."""
+
+    terrain_value = terrain_by_hex.get(f"{position[0]},{position[1]}", TerrainType.OPEN.value)
+    try:
+        terrain_type = TerrainType(str(terrain_value))
+    except ValueError:
+        terrain_type = TerrainType.OPEN
+
+    defense_modifier = DEFAULT_TERRAIN_MODIFIERS[terrain_type].defense_modifier
+    return max(0.0, min(1.0, 2.0 - defense_modifier))
+
+
+def _hex_distance(start: tuple[int, int], end: tuple[int, int]) -> int:
+    """Compute axial hex distance between two serialized positions."""
+
+    dq = end[0] - start[0]
+    dr = end[1] - start[1]
+    return (abs(dq) + abs(dr) + abs(dq + dr)) // 2
 
 
 def _iter_combat_casualties(record: Mapping[str, Any]) -> dict[str, int]:

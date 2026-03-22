@@ -1128,8 +1128,8 @@ python -m pytest tests/test_lanchester.py -v
 | LLM 에이전트 대규모 실험 | **5** | **2** | 중간 불확실성 유지 |
 
 > **검증 완료**: s1 vr=8/idr=3 → T04 교전 발생 (Blue -8, Red -3) ✅
-> s2·s4 vr=8/idr=3 결과는 Mac에서 실행 후 기입 필요
+> s2·s4 vr=8/idr=3 → Rule 에이전트 WITHDRAW/HOLD (정상 동작) ✅
 
 ---
 
-*최종 수정: 2026-03-21 (Phase 1 완료 현황 정리, 1-4 파일 경로 수정, 현재 상태 총정리 섹션 추가)*
+*최종 수정: 2026-03-22 (todo_list 최종 정리, 빠른 참조 vr 파라미터 수정, s2·s4 vr=8 결과 확정 기록)*

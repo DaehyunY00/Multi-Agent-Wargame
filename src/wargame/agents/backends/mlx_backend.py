@@ -51,13 +51,16 @@ class MLXLocalLLMBackend(LocalLLMBackend):
                 "Install it with: pip install mlx-lm"
             ) from exc
 
+        from mlx_lm.sample_utils import make_sampler  # noqa: PLC0415
+
+        sampler = make_sampler(temp=config.temperature)
         start = time.perf_counter()
         output: str = mlx_lm.generate(
             self._model,
             self._tokenizer,
             prompt=prompt,
             max_tokens=config.max_tokens,
-            temp=config.temperature,
+            sampler=sampler,
             verbose=False,
         )
         elapsed = time.perf_counter() - start
