@@ -7,12 +7,13 @@ name = "multi-agent-wargame"
 version = "0.1.0"
 description = "Initial repository skeleton for a Python tactical wargame project."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = ["PyYAML>=6.0"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
 analysis = ["scipy>=1.11", "numpy>=1.24"]
+llm-mlx = ["mlx-lm>=0.20; platform_system == 'Darwin' and platform_machine == 'arm64'"]
 plots = ["matplotlib>=3.7", "numpy>=1.24"]
 
 [tool.setuptools]

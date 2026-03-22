@@ -1,9 +1,11 @@
 """Analysis placeholders for metrics, statistics, and plotting."""
 
 from .metrics import (
+    aggregate_casualties_by_unit,
     InferenceTimingSummary,
     MockWhiteCellMetricHook,
     action_entropy,
+    combat_turn_count,
     doctrine_compliance_rate,
     escalation_index,
     escalation_sensitivity_index,
@@ -23,8 +25,10 @@ __all__ = [
     "MockWhiteCellMetricHook",
     "PlotBundle",
     "SummaryStatistics",
+    "aggregate_casualties_by_unit",
     "action_entropy",
     "build_experiment_plots",
+    "combat_turn_count",
     "doctrine_compliance_rate",
     "escalation_index",
     "escalation_sensitivity_index",

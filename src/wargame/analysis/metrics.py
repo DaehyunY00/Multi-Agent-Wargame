@@ -213,6 +213,22 @@ def tactic_transition_frequency(results: LogSource) -> float:
     return transitions / opportunities
 
 
+def combat_turn_count(results: LogSource) -> int:
+    """Count turns with detected combat from logged casualties."""
+
+    return sum(1 for record in _coerce_records(results) if _has_logged_combat(record))
+
+
+def aggregate_casualties_by_unit(results: LogSource) -> dict[str, int]:
+    """Aggregate logged casualties by unit across one run."""
+
+    totals: dict[str, int] = defaultdict(int)
+    for record in _coerce_records(results):
+        for unit_id, loss in _iter_combat_casualties(record).items():
+            totals[unit_id] += loss
+    return dict(sorted(totals.items()))
+
+
 def json_parsing_success_rate(results: LogSource) -> float:
     """Compute the success rate of logged LLM JSON parsing attempts."""
 
@@ -302,6 +318,30 @@ def _iter_decisions(record: Mapping[str, Any]) -> list[Mapping[str, Any]]:
         for key in ("blue", "red", "white_cell")
         if isinstance((decision := metadata.get(key)), Mapping)
     ]
+
+
+def _iter_combat_casualties(record: Mapping[str, Any]) -> dict[str, int]:
+    """Return positive logged casualties from one turn record."""
+
+    combat = record.get("combat")
+    if not isinstance(combat, Mapping):
+        return {}
+
+    casualties = combat.get("casualties_by_unit")
+    if not isinstance(casualties, Mapping):
+        return {}
+
+    normalized: dict[str, int] = {}
+    for unit_id, loss in casualties.items():
+        if isinstance(unit_id, str) and isinstance(loss, (int, float)) and int(loss) > 0:
+            normalized[unit_id] = int(loss)
+    return normalized
+
+
+def _has_logged_combat(record: Mapping[str, Any]) -> bool:
+    """Return whether a turn record contains positive combat casualties."""
+
+    return bool(_iter_combat_casualties(record))
 
 
 def _collect_hook_values(

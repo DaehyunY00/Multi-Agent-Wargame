@@ -46,6 +46,7 @@ mkdir -p logs runs
 > | `llm-mlx` | mlx-lm | Mac M4 로컬 추론 |
 >
 > `matplotlib`은 `plots` 그룹에 포함. 시각화 필요 시 `pip install -e ".[dev,analysis,llm-mlx,plots]"`
+> `llm-mlx`는 pyproject 기준으로 macOS arm64에서만 `mlx-lm`을 설치함.
 
 ### 확인 명령어
 
@@ -567,6 +568,7 @@ for SCENARIO in s1_open_encounter s2_mountain_assault s3_urban_fight s4_river_cr
   python scripts/run_batch.py \
     --scenario $SCENARIO \
     --matchup "local_llm:mistralai/Mistral-7B-Instruct-v0.3,rule" \
+    --backend vllm \
     --seed-count 100 \
     --stochastic-combat \
     --noise-std 0.1 \
@@ -595,6 +597,7 @@ for SCENARIO in s1_open_encounter s2_mountain_assault s3_urban_fight s4_river_cr
   python scripts/run_batch.py \
     --scenario $SCENARIO \
     --matchup "local_llm:meta-llama/Llama-3.1-8B-Instruct,rule" \
+    --backend vllm \
     --seed-count 100 \
     --stochastic-combat \
     --noise-std 0.1 \
@@ -1065,6 +1068,7 @@ python scripts/run_single_game.py \
   --scenario <SCENARIO_ID> \
   --blue-agent <AGENT_SPEC> \
   --red-agent  <AGENT_SPEC> \
+  --visibility-radius <8|5> \      # 베이스라인=8, LLM=5
   --identification-radius <3|2> \  # 베이스라인=3, LLM=2
   --seed <N> \
   --stochastic-combat --noise-std 0.1 \
@@ -1075,8 +1079,9 @@ python scripts/run_batch.py \
   --scenario <SCENARIO_ID> \       # 반복 가능
   --matchup "<blue_spec>,<red_spec>" \
   --seed-count <N> \
+  --visibility-radius <8|5> \
   --identification-radius <3|2> \
-  --visibility-radius 3 \
+  --backend <auto|mlx|vllm> \
   --stochastic-combat \
   --noise-std 0.1 \
   --output-dir <dir>
@@ -1098,11 +1103,11 @@ python -m pytest tests/test_lanchester.py -v
 | `random` | Random Agent | 모든 환경 |
 | `script` | Script Agent (기본: frontal_assault) | 모든 환경 |
 | `script:frontal_assault` | 정면공격 스크립트 | 모든 환경 |
-| `script:flanking_maneuver` | 우회기동 스크립트 | 모든 환경 |
-| `script:delay` | 지연전 스크립트 | 모든 환경 |
+| `script:flank_maneuver` | 우회기동 스크립트 | 모든 환경 |
+| `script:delay_defense` | 지연전 스크립트 | 모든 환경 |
 | `local_llm:mlx-community/Qwen2.5-7B-Instruct-4bit` | Qwen2.5-7B (MLX 4bit) | Mac M4 |
-| `local_llm:mistralai/Mistral-7B-Instruct-v0.3` | Mistral-7B (vLLM) | Colab A100 |
-| `local_llm:meta-llama/Llama-3.1-8B-Instruct` | Llama-3.1-8B (vLLM) | Colab A100 |
+| `local_llm:mistralai/Mistral-7B-Instruct-v0.3` + `--backend vllm` | Mistral-7B (vLLM) | Colab A100 |
+| `local_llm:meta-llama/Llama-3.1-8B-Instruct` + `--backend vllm` | Llama-3.1-8B (vLLM) | Colab A100 |
 
 ### 시나리오 ID 목록
 

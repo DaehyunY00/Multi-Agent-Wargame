@@ -236,6 +236,55 @@ pytest
 
 직접 Python에서 사용할 때는 editable install 이후 일반 import를 쓰면 됩니다.
 
+## Local LLM 실험 설정
+
+로컬 LLM 실험은 실행 환경에 따라 설치와 CLI 인자가 조금 다릅니다.
+
+```bash
+# Mac Apple Silicon + MLX
+python -m pip install -e ".[dev,analysis,llm-mlx]"
+
+# Linux / Colab + vLLM
+python -m pip install -e ".[dev,analysis]"
+python -m pip install vllm
+```
+
+`pyproject.toml`의 `llm-mlx` extra는 `mlx-lm`을 macOS arm64 환경에서만 설치하도록 정의되어 있습니다.
+
+CLI 에이전트 스펙은 아래 형식을 사용합니다.
+
+- baseline: `rule`, `random`, `script`, `script:frontal_assault`, `script:flank_maneuver`, `script:delay_defense`
+- local LLM: `local_llm:<model_id_or_path>`
+
+예시는 다음과 같습니다.
+
+```bash
+# Mac M-series / MLX
+python scripts/run_single_game.py \
+  --scenario s1_open_encounter \
+  --blue-agent local_llm:mlx-community/Qwen2.5-7B-Instruct-4bit \
+  --red-agent rule \
+  --backend mlx \
+  --visibility-radius 5 \
+  --identification-radius 2 \
+  --output runs/qwen_s1.jsonl
+
+# Colab / vLLM
+python scripts/run_batch.py \
+  --scenario s1_open_encounter \
+  --matchup "local_llm:mistralai/Mistral-7B-Instruct-v0.3,rule" \
+  --backend vllm \
+  --seed-count 10 \
+  --visibility-radius 5 \
+  --identification-radius 2 \
+  --output-dir runs/mistral_batch
+```
+
+현재 권장 fog-of-war 프리셋은 아래와 같습니다.
+
+- baseline 비교 실험: `--visibility-radius 8 --identification-radius 3`
+- local LLM 실험: `--visibility-radius 5 --identification-radius 2`
+
 ## 단일 실험 예시
 
 아래 예시는 baseline agent끼리 1턴짜리 실험을 실행하고 JSONL 로그를 남기는 최소 예시입니다.
@@ -409,10 +458,7 @@ print(summarize_runs(run_paths))
 
 아래 영역은 구조는 만들어져 있지만 구현이 아직 얕거나 placeholder입니다.
 
-- scenario YAML loader 고도화
 - white-cell의 실제 doctrine / rationality scoring
-- plotting 구현
-- CLI 스크립트(`scripts/`) 완성
-- preset scenario를 바로 실행하는 상위 실행기
+- plot/report artifact의 추가 고도화
 
-즉, 현재 저장소는 "핵심 엔진 vertical slice + 비교 가능한 베이스라인 + 로그 기반 분석 기초"까지는 준비되어 있고, 대규모 연구 실험을 위한 상위 편의 계층은 이어서 확장하는 단계입니다.
+즉, 현재 저장소는 "핵심 엔진 vertical slice + 비교 가능한 베이스라인 + JSONL 기반 실험 실행기 + 로그 기반 분석 기초"까지는 준비되어 있고, 평가지표 정교화와 시각화 고도화는 이어서 확장하는 단계입니다.
