@@ -77,6 +77,13 @@ Python 3.11+ 기반의 전술 워게임 연구용 저장소입니다. 현재 목
   - strict JSON schema 검증
   - `reasoning`, `doctrine_reference`, `actions[]` 구조 파싱
   - unit id, action type, posture, target hex 검증
+  - LLM 출력 오류 복원 로직 (6종):
+    - non-HOLD + `target_hex=null` → HOLD/DEFEND로 자동 강등 (전체 플랜 거부 없음)
+    - HOLD + `target_hex≠null` → target_hex 자동 클리어
+    - `action_type` 별칭 매핑: `maneuver→move`, `defend→hold`, `fire→support_by_fire`
+    - `posture` 별칭 매핑: `offense→attack`, `observe→maneuver`, `recon→maneuver`
+    - 적 팩션 unit_id 자동 드롭, suffix 부분 매칭 (`"assault"→"blue-assault"`)
+    - 누락된 아군 유닛 자동으로 HOLD/DEFEND fallback 삽입
 - malformed output 또는 invalid action 시 safe fallback plan 생성
 
 fallback은 조용히 실패를 숨기지 않고, defensive hold로 바꾸면서 에러 정보를 metadata에 남깁니다.
@@ -99,6 +106,13 @@ fallback은 조용히 실패를 숨기지 않고, defensive hold로 바꾸면서
   - 실제 모델 로딩 없이 테스트 가능한 fake backend
 
 이 구조는 MLX on Mac, Colab 환경의 다른 backend, 그리고 Qwen/Mistral/Llama 계열 wrapper를 나중에 붙이기 쉽게 설계되어 있습니다.
+
+시스템 프롬프트는 FM 3-90 교리 기반으로 구성됩니다.
+
+- `BLUE_SYSTEM_PROMPT`: FM 3-90 집중·기습·경계·기동 4원칙 + MDMP 3단계(ASSESS/DEVELOP/DECIDE)
+- `RED_SYSTEM_PROMPT`: 종심방어·역습·지형활용·기만 4원칙 + MDMP 3단계
+- `WHITE_CELL_SYSTEM_PROMPT`: 6개 교리 원칙 체크리스트 기반 판정
+- `OUTPUT_CONTRACT`: 모든 역할의 JSON 출력 규약 명시 (unit_id는 아군 ID만 사용 강제)
 
 ### 6. Baseline Agents
 
@@ -280,10 +294,19 @@ python scripts/run_batch.py \
   --output-dir runs/mistral_batch
 ```
 
-현재 권장 fog-of-war 프리셋은 아래와 같습니다.
+Fog-of-war와 max-tokens 권장 설정은 아래와 같습니다.
 
-- baseline 비교 실험: `--visibility-radius 8 --identification-radius 3`
-- local LLM 실험: `--visibility-radius 5 --identification-radius 2`
+```bash
+# fog-preset 옵션 (--visibility-radius / --identification-radius 대신 사용 가능)
+--fog-preset baseline   # vr=8, idr=3 (Rule/Script/Random 베이스라인 비교용)
+--fog-preset llm        # vr=5, idr=2 (LLM 실험용 — 제한적 정보 조건)
+
+# max-tokens 권장값 (JSON 중단 방지)
+--max-tokens 1024       # 일반 실험 권장
+--max-tokens 4096       # 긴 reasoning 또는 s2+ 복잡 시나리오용
+```
+
+> **주의**: Phase 3 베이스라인은 `fog-preset baseline`, Phase 4 LLM 실험은 `fog-preset llm` 조건으로 실행됩니다. 두 실험을 직접 비교할 때는 fog 조건 차이를 고려해야 합니다.
 
 ## 단일 실험 예시
 
@@ -454,11 +477,36 @@ print(summarize_runs(run_paths))
 - turn loop integration
 - experiment metrics
 
+## 실험 현황 (2026-03-25 기준)
+
+| Phase | 내용 | 상태 | 게임 수 |
+|---|---|---|---|
+| Phase 1 | 엔진 검증 (단위 테스트 + 시나리오 검증) | ✅ 완료 | 38개 테스트 PASS |
+| Phase 2 | LLM 구축 + 안정성 테스트 | ✅ 완료 | fallback ~14% 달성 |
+| Phase 3 | Rule-vs-Rule 베이스라인 | ✅ 완료 | 250 게임 (5시나리오 × 50 seeds) |
+| Phase 4-1 | Qwen2.5-7B (Mac M4, MLX) | ⏳ 진행중 | 48/100 게임 완료 |
+| Phase 4-2 | Mistral-7B (Colab, vLLM) | ⏳ 로컬 전송 대기 | 완료 |
+| Phase 4-3 | Llama-3.1-8B (Colab, vLLM) | ⏳ 로컬 전송 대기 | 완료 |
+| Phase 5 | 통계 분석 + 논문 | ⏳ 대기 | — |
+
+**Phase 3 베이스라인 집계 결과** (Rule vs Rule, 250 게임):
+
+- DCR (교리 준수율): **0.804**
+- TRS (전술 합리성): **3.548** / 5
+- Action Entropy: **1.620**
+- ESI (공격성 변동성): **0.102**
+
+**Phase 4 Qwen 초기 결과** (진행중):
+
+- S1 평지 조우전: Blue 승률 **~20%** (베이스라인 6% 대비 +14%p)
+- S2 산악 방어진지: Blue 승률 **~0%** (베이스라인 ~96% 대비 -96%p) — unit_id hallucination 이슈
+
 ## 아직 placeholder인 부분
 
 아래 영역은 구조는 만들어져 있지만 구현이 아직 얕거나 placeholder입니다.
 
 - white-cell의 실제 doctrine / rationality scoring
 - plot/report artifact의 추가 고도화
+- `state_to_text.py`: unit_id 힌트 라인 추가 예정 (unit_id hallucination 방지)
 
 즉, 현재 저장소는 "핵심 엔진 vertical slice + 비교 가능한 베이스라인 + JSONL 기반 실험 실행기 + 로그 기반 분석 기초"까지는 준비되어 있고, 평가지표 정교화와 시각화 고도화는 이어서 확장하는 단계입니다.
