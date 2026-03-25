@@ -10,7 +10,8 @@ from collections.abc import Collection, Sequence
 from dataclasses import dataclass, field
 from typing import Any
 
-from wargame.core.enums import Faction
+from wargame.core.enums import ActionType, Faction, Posture
+from wargame.core.models import ActionCommand
 
 from .base import AgentDecision, BaseAgent
 from .parser import ActionParseError, ActionParser, ParsedActionPlan
@@ -23,7 +24,7 @@ class LocalLLMConfig:
 
     model_name: str
     temperature: float = 0.7
-    max_tokens: int = 512
+    max_tokens: int = 1024
     context_window: int = 2048
 
 
@@ -139,7 +140,43 @@ class LocalLLMAgent(BaseAgent):
             )
             return self._build_decision(plan=plan, response=response, rendered_prompt=rendered_prompt)
 
+        # Ensure every friendly unit has exactly one action.
+        plan = self._ensure_all_units_covered(plan, valid_unit_ids=set(valid_unit_ids))
+
         return self._build_decision(plan=plan, response=response, rendered_prompt=rendered_prompt)
+
+    @staticmethod
+    def _ensure_all_units_covered(
+        plan: ParsedActionPlan,
+        *,
+        valid_unit_ids: set[str],
+    ) -> ParsedActionPlan:
+        """Append HOLD/DEFEND fallback for any friendly unit missing from the plan."""
+        covered = {a.unit_id for a in plan.actions}
+        missing = valid_unit_ids - covered
+        if not missing:
+            return plan
+        extra = [
+            ActionCommand(
+                unit_id=uid,
+                action_type=ActionType.HOLD,
+                posture=Posture.DEFEND,
+                metadata={"fallback": True, "fallback_reason": "missing from model output"},
+            )
+            for uid in sorted(missing)
+        ]
+        for uid in sorted(missing):
+            _logger.warning(
+                "Unit %r missing from parsed plan — adding HOLD/DEFEND fallback.",
+                uid,
+            )
+        return ParsedActionPlan(
+            reasoning=plan.reasoning,
+            doctrine_reference=plan.doctrine_reference,
+            actions=list(plan.actions) + extra,
+            used_fallback=plan.used_fallback,
+            errors=plan.errors,
+        )
 
     def _build_decision(
         self,
@@ -172,46 +209,92 @@ class LocalLLMAgent(BaseAgent):
 
 
 def extract_json_object(raw_output: str) -> str:
-    """Extract the first balanced JSON object from model output.
+    """Extract the best-matching JSON plan object from model output.
 
-    This allows callers to recover JSON from fenced code blocks or prose-wrapped
-    model output while still surfacing clear errors when no valid object exists.
+    Scans for all top-level balanced JSON objects, then returns the first one
+    that contains all three expected plan keys (``reasoning``, ``actions``,
+    ``doctrine_reference``).  If none contains all three, returns the first
+    valid JSON object found (original behaviour), so the downstream validator
+    can produce a precise error message about which keys are missing.
+
+    This handles the common Mistral failure mode where the model emits a short
+    per-unit action dict *before* the full plan object, causing a first-wins
+    extractor to pick up the wrong object.
     """
 
-    start_index = raw_output.find("{")
-    if start_index < 0:
+    _PLAN_KEYS = frozenset({"reasoning", "actions", "doctrine_reference"})
+    candidates = _find_all_top_level_json_objects(raw_output)
+    if not candidates:
         raise ModelOutputError("No JSON object found in model output.")
 
-    depth = 0
-    in_string = False
-    escaped = False
-    for index in range(start_index, len(raw_output)):
-        character = raw_output[index]
-        if escaped:
-            escaped = False
+    # Pass 1: prefer a candidate that already satisfies the full plan schema.
+    for raw in candidates:
+        try:
+            parsed = json.loads(raw)
+        except json.JSONDecodeError:
             continue
-        if character == "\\":
-            escaped = True
-            continue
-        if character == '"':
-            in_string = not in_string
-            continue
-        if in_string:
-            continue
-        if character == "{":
-            depth += 1
-        elif character == "}":
-            depth -= 1
-            if depth == 0:
-                candidate = raw_output[start_index : index + 1]
-                try:
-                    parsed = json.loads(candidate)
-                except json.JSONDecodeError as exc:
-                    raise ModelOutputError(
-                        f"Extracted JSON object is invalid: {exc.msg}."
-                    ) from exc
-                if not isinstance(parsed, dict):
-                    raise ModelOutputError("Extracted JSON payload must be an object.")
-                return candidate
+        if isinstance(parsed, dict) and _PLAN_KEYS.issubset(parsed.keys()):
+            return raw
+
+    # Pass 2: return the first parseable object and let the validator report
+    # exactly which required keys are missing.
+    for raw in candidates:
+        try:
+            parsed = json.loads(raw)
+        except json.JSONDecodeError as exc:
+            raise ModelOutputError(
+                f"Extracted JSON object is invalid: {exc.msg}."
+            ) from exc
+        if not isinstance(parsed, dict):
+            raise ModelOutputError("Extracted JSON payload must be an object.")
+        return raw
 
     raise ModelOutputError("Unterminated JSON object in model output.")
+
+
+def _find_all_top_level_json_objects(text: str) -> list[str]:
+    """Return every top-level balanced ``{…}`` object found in *text*.
+
+    Each call restarts the depth counter from zero after a complete object is
+    found, so nested objects inside a returned candidate are *not* returned
+    separately.
+    """
+
+    results: list[str] = []
+    pos = 0
+    length = len(text)
+    while pos < length:
+        start = text.find("{", pos)
+        if start < 0:
+            break
+        depth = 0
+        in_string = False
+        escaped = False
+        end = -1
+        for i in range(start, length):
+            ch = text[i]
+            if escaped:
+                escaped = False
+                continue
+            if ch == "\\":
+                escaped = True
+                continue
+            if ch == '"':
+                in_string = not in_string
+                continue
+            if in_string:
+                continue
+            if ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth == 0:
+                    end = i
+                    break
+        if end >= 0:
+            results.append(text[start : end + 1])
+            pos = end + 1
+        else:
+            # Unterminated object — no further complete objects possible.
+            break
+    return results

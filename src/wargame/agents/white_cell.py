@@ -3,24 +3,128 @@
 from __future__ import annotations
 
 import json
+import logging
 from collections.abc import Collection, Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 
 from wargame.core.enums import ActionType, Faction
 
 from .base import AgentDecision, BaseAgent
-from .local_llm import LocalLLMAgent
+from .local_llm import BackendResponse, LocalLLMAgent, ModelOutputError, extract_json_object
+from .parser import ActionParser
 from .prompts import PromptRole
+from .white_cell_parser import (
+    ParsedWhiteCellEvaluation,
+    WhiteCellParseError,
+    WhiteCellParser,
+)
+
+_logger = logging.getLogger(__name__)
 
 
 @dataclass(slots=True)
 class WhiteCellAgent(LocalLLMAgent):
-    """White-role specialization of the generic local LLM agent wrapper."""
+    """White-role LLM agent that uses a dedicated evaluation parser.
+
+    Unlike Blue/Red agents, WhiteCellAgent does not use ``ActionParser``; it
+    uses ``WhiteCellParser`` to parse evaluation JSON with keys such as
+    ``tactical_soundness``, ``doctrine_compliance``, and ``narrative``.  The
+    system prompt is also served with ``WHITE_CELL_OUTPUT_CONTRACT`` rather
+    than the action-agent ``OUTPUT_CONTRACT``.
+    """
 
     name: str = "white_cell"
     faction: Faction = Faction.WHITE
     role: PromptRole = PromptRole.WHITE
+    # parser is inherited but unused; provide a default so callers need not pass one
+    parser: ActionParser = field(default_factory=ActionParser)
+    wc_parser: WhiteCellParser = field(default_factory=WhiteCellParser)
+
+    def decide(
+        self,
+        state_text: str,
+        *,
+        valid_unit_ids: Collection[str] = (),
+    ) -> AgentDecision:
+        """Evaluate a turn summary JSON using the dedicated white-cell parser.
+
+        ``valid_unit_ids`` is intentionally ignored: the White Cell adjudicates
+        rather than commands, so unit-ID validation is not applicable.
+        """
+        del valid_unit_ids
+
+        from .local_llm import ChatMessage  # noqa: PLC0415 — avoids circular import
+
+        prompt_spec = self.prompt_registry.get(self.role)
+        messages = (
+            ChatMessage(role="system", content=prompt_spec.full_system_prompt()),
+            ChatMessage(role="user", content=state_text),
+        )
+        rendered_prompt = self.chat_template_adapter.render(messages)
+        response = self.backend.generate(rendered_prompt, self.config)
+
+        try:
+            json_payload = extract_json_object(response.content)
+            evaluation = self.wc_parser.parse(json_payload)
+        except (ModelOutputError, WhiteCellParseError) as exc:
+            _logger.debug(
+                "White-cell parse failed (%s: %s) — raw output: %r",
+                type(exc).__name__,
+                exc,
+                response.content,
+            )
+            if not self.fallback_on_error:
+                raise
+            evaluation = self.wc_parser.build_fallback_evaluation(error=exc)
+
+        return self._build_wc_decision(evaluation=evaluation, response=response)
+
+    def _build_wc_decision(
+        self,
+        *,
+        evaluation: ParsedWhiteCellEvaluation,
+        response: BackendResponse,
+    ) -> AgentDecision:
+        """Convert a parsed white-cell evaluation into the stable AgentDecision format.
+
+        Metadata is normalised to be compatible with the heuristic white cell:
+        - ``scores`` dict mirrors ``HeuristicWhiteCellAgent``'s structure
+        - Top-level ``doctrine_compliance`` / ``tactical_rationality`` shortcuts
+          are promoted so ``_extract_metric_from_record`` can find them at any
+          of the paths it checks.
+        """
+        scores: dict[str, float] = {}
+        if evaluation.tactical_soundness is not None:
+            scores["tactical_soundness"] = float(evaluation.tactical_soundness)
+        if evaluation.doctrine_compliance is not None:
+            scores["doctrine_compliance"] = evaluation.doctrine_compliance
+        if evaluation.tactical_rationality is not None:
+            scores["tactical_rationality"] = evaluation.tactical_rationality
+
+        metadata: dict[str, Any] = {
+            "decision_source": "white_cell_llm",
+            "scores": scores,
+            "used_fallback": evaluation.used_fallback,
+            "errors": list(evaluation.errors),
+            "raw_output": response.content,
+        }
+        # Promote top-level shortcuts for metric-extractor compatibility
+        # (matches the structure produced by HeuristicWhiteCellAgent)
+        if evaluation.doctrine_compliance is not None:
+            metadata["doctrine_compliance"] = evaluation.doctrine_compliance
+        if evaluation.tactical_rationality is not None:
+            metadata["tactical_rationality"] = evaluation.tactical_rationality
+        metadata.update(response.metadata)
+
+        return AgentDecision(
+            faction=self.faction,
+            reasoning=evaluation.narrative,
+            doctrine_reference="white_cell/llm/v1",
+            actions=[],  # White Cell evaluates; it does not command units
+            used_fallback=evaluation.used_fallback,
+            metadata=metadata,
+        )
 
 
 @dataclass(slots=True)

@@ -22,10 +22,21 @@ Required top-level keys:
 - actions: array of action objects
 
 Each action object must contain:
-- unit_id: string
+- unit_id: MUST be one of your Friendly Unit IDs shown in the situation report above. NEVER use enemy unit IDs.
 - action_type: one of hold, move, attack, support_by_fire, recon, withdraw
 - posture: one of attack, defend, support, maneuver, withdraw
 - target_hex: object with integer q and r, or null only for hold
+
+target_hex is REQUIRED for all non-hold action types. It must NEVER be null for attack, move, recon, support_by_fire, or withdraw.
+""".strip()
+
+WHITE_CELL_OUTPUT_CONTRACT = """
+Respond with a single JSON object only.
+Required top-level keys:
+- tactical_soundness: integer 1–5 (1 = doctrine violation, 5 = textbook execution)
+- doctrine_compliance: float 0.0–1.0 (fraction of the 6 principles passed, e.g. 4/6 ≈ 0.667)
+- narrative: string explaining which principles passed or failed and why
+- actions: array (may be empty; include adjudicator-directed hold orders only for severe violations)
 """.strip()
 
 BLUE_SYSTEM_PROMPT = """
@@ -129,6 +140,7 @@ class PromptRegistry:
                 PromptRole.WHITE: PromptSpec(
                     role=PromptRole.WHITE,
                     system_prompt=WHITE_CELL_SYSTEM_PROMPT,
+                    output_contract=WHITE_CELL_OUTPUT_CONTRACT,
                 ),
             }
         )

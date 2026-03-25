@@ -83,6 +83,51 @@ def test_unknown_unit_is_rejected() -> None:
         parser.parse(payload, valid_unit_ids={"blue-1"})
 
 
+def test_non_hold_without_target_hex_is_demoted_not_rejected() -> None:
+    """An attack/move action missing target_hex should be demoted to HOLD/DEFEND.
+
+    The plan itself must be returned as valid (used_fallback=False) and the
+    other actions in the plan must be executed unchanged.
+    """
+
+    parser = ActionParser(grid=HexGrid(width=5, height=5))
+    payload = """
+    {
+      "reasoning": "Push forward but forgot target on one unit.",
+      "doctrine_reference": "FM 3-90",
+      "actions": [
+        {
+          "unit_id": "blue-1",
+          "action_type": "attack",
+          "target_hex": null,
+          "posture": "attack"
+        },
+        {
+          "unit_id": "blue-2",
+          "action_type": "move",
+          "target_hex": {"q": 2, "r": 2},
+          "posture": "maneuver"
+        }
+      ]
+    }
+    """
+
+    plan = parser.parse(payload, valid_unit_ids={"blue-1", "blue-2"})
+
+    assert plan.used_fallback is False
+    assert len(plan.actions) == 2
+
+    demoted = next(a for a in plan.actions if a.unit_id == "blue-1")
+    assert demoted.action_type is ActionType.HOLD
+    assert demoted.posture is Posture.DEFEND
+    assert demoted.metadata.get("auto_demoted") is True
+    assert demoted.metadata.get("original_action") == "attack"
+
+    kept = next(a for a in plan.actions if a.unit_id == "blue-2")
+    assert kept.action_type is ActionType.MOVE
+    assert kept.target_hex == Position(2, 2)
+
+
 def test_malformed_json_can_be_mapped_to_safe_fallback_plan() -> None:
     """Callers should be able to recover from malformed JSON with a fallback."""
 
