@@ -477,29 +477,31 @@ print(summarize_runs(run_paths))
 - turn loop integration
 - experiment metrics
 
-## 실험 현황 (2026-03-25 기준)
+## 실험 현황 (2026-03-27 기준)
 
 | Phase | 내용 | 상태 | 게임 수 |
 |---|---|---|---|
 | Phase 1 | 엔진 검증 (단위 테스트 + 시나리오 검증) | ✅ 완료 | 38개 테스트 PASS |
 | Phase 2 | LLM 구축 + 안정성 테스트 | ✅ 완료 | fallback ~14% 달성 |
 | Phase 3 | Rule-vs-Rule 베이스라인 | ✅ 완료 | 250 게임 (5시나리오 × 50 seeds) |
-| Phase 4-1 | Qwen2.5-7B (Mac M4, MLX) | ⏳ 진행중 | 48/100 게임 완료 |
-| Phase 4-2 | Mistral-7B (Colab, vLLM) | ⏳ 로컬 전송 대기 | 완료 |
-| Phase 4-3 | Llama-3.1-8B (Colab, vLLM) | ⏳ 로컬 전송 대기 | 완료 |
+| Phase 4-1 | Qwen2.5-7B-4bit (Mac M4, MLX) | ✅ 완료 | 100 게임 (5시나리오 × 20 seeds) |
+| Phase 4-2 | Mistral-7B (Colab, vLLM) | ⏳ 로컬 전송 대기 | Colab 완료 |
+| Phase 4-3 | Llama-3.1-8B (Colab, vLLM) | ⏳ 로컬 전송 대기 | Colab 완료 |
 | Phase 5 | 통계 분석 + 논문 | ⏳ 대기 | — |
 
-**Phase 3 베이스라인 집계 결과** (Rule vs Rule, 250 게임):
+**Phase 3 베이스라인 vs Phase 4-1 Qwen 비교**:
 
-- DCR (교리 준수율): **0.804**
-- TRS (전술 합리성): **3.548** / 5
-- Action Entropy: **1.620**
-- ESI (공격성 변동성): **0.102**
+| 시나리오 | Blue 승률 (Baseline) | Blue 승률 (Qwen) | 변화 |
+|---|---|---|---|
+| S1 평지 조우전 | 6.0% | **40.0%** | +34.0%p |
+| S2 산악 방어진지 | 2.0% | **45.0%** | +43.0%p |
+| S3 시가지 전투 | 6.0% | **50.0%** | +44.0%p |
+| S4 하천 도하 | 0.0% | **60.0%** | +60.0%p |
+| S5 포위 돌파 | 2.0% | **50.0%** | +48.0%p |
+| **전체** | **3.2%** | **49.0%** | **+45.8%p** |
 
-**Phase 4 Qwen 초기 결과** (진행중):
-
-- S1 평지 조우전: Blue 승률 **~20%** (베이스라인 6% 대비 +14%p)
-- S2 산악 방어진지: Blue 승률 **~0%** (베이스라인 ~96% 대비 -96%p) — unit_id hallucination 이슈
+- DCR: 0.804 (Rule) → **0.845** (Qwen) / TRS: 3.550 → **3.786**
+- Fallback 비율: 평균 **11.5%** (S1 16.2%, S3~S5 8~9%)
 
 ## 아직 placeholder인 부분
 

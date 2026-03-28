@@ -208,33 +208,67 @@ class LocalLLMAgent(BaseAgent):
         )
 
 
+def _strip_markdown_fences(text: str) -> str:
+    """Remove markdown code fences that some models wrap around JSON output.
+
+    Handles both ````json\\n...\\n```` and `````...````` variants.
+    Returns the text between the first opening fence and the matching closing
+    fence; if no fence is found, returns *text* unchanged.
+    """
+    import re
+
+    fence_re = re.compile(r"```(?:json)?\s*\n(.*?)\n```", re.DOTALL)
+    m = fence_re.search(text)
+    if m:
+        return m.group(1).strip()
+    # Single-backtick inline variant (rare but seen with some fine-tunes)
+    inline_re = re.compile(r"`({.*?})`", re.DOTALL)
+    m2 = inline_re.search(text)
+    if m2:
+        return m2.group(1).strip()
+    return text
+
+
 def extract_json_object(raw_output: str) -> str:
     """Extract the best-matching JSON plan object from model output.
 
-    Scans for all top-level balanced JSON objects, then returns the first one
-    that contains all three expected plan keys (``reasoning``, ``actions``,
-    ``doctrine_reference``).  If none contains all three, returns the first
-    valid JSON object found (original behaviour), so the downstream validator
-    can produce a precise error message about which keys are missing.
+    Handles four common LLM output failure modes in order of preference:
 
-    This handles the common Mistral failure mode where the model emits a short
-    per-unit action dict *before* the full plan object, causing a first-wins
-    extractor to pick up the wrong object.
+    1. **Markdown code fences** — strips ````json\\n...\\n```` wrappers before
+       scanning so the JSON is exposed to the extractor.
+    2. **"plan" key wrapper** — some models emit ``{"plan": {...full plan...}}``.
+       The inner object is unwrapped and returned directly.
+    3. **Action-dict prefix** — Mistral sometimes emits a short per-unit action
+       dict *before* the full plan.  Scanning all top-level objects and
+       preferring the one with all three plan keys handles this.
+    4. **Missing keys** — if no candidate has all three required keys, returns
+       the first valid object so the downstream validator can produce a precise
+       error message.
     """
 
     _PLAN_KEYS = frozenset({"reasoning", "actions", "doctrine_reference"})
-    candidates = _find_all_top_level_json_objects(raw_output)
+
+    # Step 0: strip markdown fences (Mistral / Llama sometimes wrap output).
+    cleaned = _strip_markdown_fences(raw_output)
+
+    candidates = _find_all_top_level_json_objects(cleaned)
     if not candidates:
         raise ModelOutputError("No JSON object found in model output.")
 
-    # Pass 1: prefer a candidate that already satisfies the full plan schema.
+    # Pass 1: prefer a candidate that directly satisfies the full plan schema.
     for raw in candidates:
         try:
             parsed = json.loads(raw)
         except json.JSONDecodeError:
             continue
-        if isinstance(parsed, dict) and _PLAN_KEYS.issubset(parsed.keys()):
+        if not isinstance(parsed, dict):
+            continue
+        if _PLAN_KEYS.issubset(parsed.keys()):
             return raw
+        # "plan" key wrapper: {"plan": {reasoning, actions, doctrine_reference}}
+        inner = parsed.get("plan")
+        if isinstance(inner, dict) and _PLAN_KEYS.issubset(inner.keys()):
+            return json.dumps(inner)
 
     # Pass 2: return the first parseable object and let the validator report
     # exactly which required keys are missing.
