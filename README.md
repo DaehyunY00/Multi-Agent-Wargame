@@ -245,6 +245,10 @@ LLM 관련 의사결정 메타데이터에는 다음 필드가 들어갈 수 있
 
 ```bash
 python -m pip install -e .[dev]
+
+# 시각화 PNG/SVG까지 만들려면
+python -m pip install -e ".[dev,plots]"
+
 pytest
 ```
 
@@ -445,6 +449,42 @@ print(win_rate(run_paths))
 print(mean_remaining_force_ratio(run_paths))
 print(summarize_runs(run_paths))
 ```
+
+### CLI로 요약/시각화하기
+
+`scripts/evaluate_logs.py`는 JSON 요약용이고, `scripts/visualize_logs.py`는 summary 파일과 plot artifact를 함께 생성하는 용도입니다.
+
+```bash
+# 요약 JSON만 확인
+python scripts/evaluate_logs.py runs/qwen_s1.jsonl
+
+# 여러 파일을 한 번에 시각화
+python scripts/visualize_logs.py \
+  runs/qwen_s1.jsonl runs/phase2/prompt_test_v2.jsonl \
+  --output-dir runs/visualizations/sample_logs
+
+# 디렉터리를 재귀적으로 스캔해서 시각화
+python scripts/visualize_logs.py \
+  runs/phase2/batch_v2/ \
+  --output-dir runs/visualizations/batch_v2
+```
+
+위 예시 경로는 현재 저장소에 실제로 존재하는 JSONL 로그를 기준으로 적었습니다. 다른 경로를 사용할 때는 반드시 실제 존재하는 `.jsonl` 파일 또는 디렉터리 경로로 바꿔야 합니다.
+
+`scripts/visualize_logs.py`는 아래 산출물을 생성합니다.
+
+- `aggregate_summary.json`
+- `aggregate_summary.csv`
+- `win_rate_by_scenario.png`, `win_rate_by_scenario.svg`
+- `action_entropy_by_agent.png`, `action_entropy_by_agent.svg`
+- `escalation_sensitivity_by_agent.png`, `escalation_sensitivity_by_agent.svg`
+- `parsing_success_by_agent.png`, `parsing_success_by_agent.svg`
+- `force_curves/<run_id>.png`, `force_curves/<run_id>.svg`
+- `battlefield_replays/<run_id>/index.html`
+- `battlefield_replays/<run_id>/manifest.json`
+- `battlefield_replays/<run_id>/turn_001.svg`, `turn_002.svg`, ...
+
+`battlefield_replays/<run_id>/index.html`을 브라우저에서 열면 턴별 전장 스냅샷을 슬라이더/재생 버튼으로 넘겨 보면서 유닛 위치, 이동 의도선, 교전 참여, 피해 상황을 확인할 수 있습니다.
 
 ### 현재 제공되는 지표 해석
 

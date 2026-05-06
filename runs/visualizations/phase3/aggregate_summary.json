@@ -1,0 +1,28 @@
+{
+  "agent_names": [
+    "rule"
+  ],
+  "blue_win_rate": 0.672,
+  "inference_timing": {
+    "max_seconds": 0.0006828749901615083,
+    "mean_seconds": 2.7521884695698437e-05,
+    "sample_count": 6500
+  },
+  "input_log_count": 250,
+  "mean_action_entropy": 1.6204210494073554,
+  "mean_blue_remaining_force_ratio": 0.956863169398907,
+  "mean_escalation_sensitivity_index": 0.10164840714840714,
+  "mean_json_parsing_success_rate": 0.0,
+  "mean_red_remaining_force_ratio": 0.9598598156682027,
+  "mean_tactic_transition_frequency": 0.21938189588189588,
+  "mean_turns": 13.0,
+  "red_win_rate": 0.328,
+  "run_count": 250,
+  "scenario_ids": [
+    "s1_open_encounter",
+    "s2_mountain_assault",
+    "s3_urban_fight",
+    "s4_river_crossing",
+    "s5_breakout"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "agent_names": [
+    "blue_agent",
+    "red_rule"
+  ],
+  "blue_win_rate": 0.2,
+  "inference_timing": {
+    "max_seconds": 41.2695,
+    "mean_seconds": 18.086772528837773,
+    "sample_count": 240
+  },
+  "input_log_count": 10,
+  "mean_action_entropy": 2.068771131969455,
+  "mean_blue_remaining_force_ratio": 0.8056666666666666,
+  "mean_escalation_sensitivity_index": 0.14672979797979796,
+  "mean_json_parsing_success_rate": 0.75,
+  "mean_red_remaining_force_ratio": 0.9196666666666667,
+  "mean_tactic_transition_frequency": 0.4562470782602442,
+  "mean_turns": 12.0,
+  "red_win_rate": 0.7,
+  "run_count": 10,
+  "scenario_ids": [
+    "s1_open_encounter"
+  ]
+}

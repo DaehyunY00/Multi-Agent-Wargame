@@ -1,0 +1,2 @@
+input_log_count,scenario_ids,agent_names,run_count,mean_turns,blue_win_rate,red_win_rate,mean_blue_remaining_force_ratio,mean_red_remaining_force_ratio,mean_action_entropy,mean_escalation_sensitivity_index,mean_tactic_transition_frequency,mean_json_parsing_success_rate,inference_sample_count,inference_mean_seconds,inference_max_seconds
+10,s1_open_encounter,blue_agent;red_rule,10,12.0,0.2,0.7,0.8056666666666666,0.9196666666666667,2.068771131969455,0.14672979797979796,0.4562470782602442,0.75,240,18.086772528837773,41.2695

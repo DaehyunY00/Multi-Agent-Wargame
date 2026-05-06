@@ -1,0 +1,2133 @@
+{
+  "bounds": {
+    "max_q": 14,
+    "max_r": 13,
+    "min_q": 5,
+    "min_r": 4
+  },
+  "frame_count": 13,
+  "frames": [
+    {
+      "action_overlays": [
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 6,
+            "r": 5
+          },
+          "target": {
+            "q": 6,
+            "r": 5
+          },
+          "unit_id": "blue-guard"
+        },
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 6,
+            "r": 7
+          },
+          "target": {
+            "q": 6,
+            "r": 7
+          },
+          "unit_id": "blue-rear"
+        },
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 7,
+            "r": 6
+          },
+          "target": {
+            "q": 7,
+            "r": 6
+          },
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "action_type": "move",
+          "faction": "red",
+          "origin": {
+            "q": 9,
+            "r": 7
+          },
+          "target": {
+            "q": 9,
+            "r": 7
+          },
+          "unit_id": "red-block"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 10,
+            "r": 5
+          },
+          "target": {
+            "q": 10,
+            "r": 5
+          },
+          "unit_id": "red-north"
+        },
+        {
+          "action_type": "move",
+          "faction": "red",
+          "origin": {
+            "q": 8,
+            "r": 9
+          },
+          "target": {
+            "q": 8,
+            "r": 9
+          },
+          "unit_id": "red-south"
+        }
+      ],
+      "caption": "Turn 1 | blue=305 | red=280 | casualties=0",
+      "casualties_by_unit": {},
+      "combat_summary": "No localized engagements met contact or fire criteria this turn.",
+      "engaged_unit_ids": [],
+      "file_name": "turn_001.svg",
+      "moved_unit_ids": [],
+      "notes": [
+        "blue-guard advanced to (6,5) via move.",
+        "blue-rear advanced to (6,7) via move.",
+        "blue-spearhead advanced to (7,6) via move.",
+        "red-block advanced to (9,7) via move.",
+        "red-north advanced to (10,5) via withdraw.",
+        "red-south advanced to (8,9) via move.",
+        "Combat skipped.",
+        "Turn advanced."
+      ],
+      "turn": 1,
+      "units": [
+        {
+          "faction": "blue",
+          "position": {
+            "q": 6,
+            "r": 5
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 95,
+          "unit_id": "blue-guard"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 6,
+            "r": 7
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "blue-rear"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 7,
+            "r": 6
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 125,
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 9,
+            "r": 7
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 110,
+          "unit_id": "red-block"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 10,
+            "r": 5
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "red-north"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 8,
+            "r": 9
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "red-south"
+        }
+      ],
+      "winner": null
+    },
+    {
+      "action_overlays": [
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 6,
+            "r": 5
+          },
+          "target": {
+            "q": 7,
+            "r": 5
+          },
+          "unit_id": "blue-guard"
+        },
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 7,
+            "r": 6
+          },
+          "target": {
+            "q": 7,
+            "r": 7
+          },
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 9,
+            "r": 7
+          },
+          "target": {
+            "q": 10,
+            "r": 7
+          },
+          "unit_id": "red-block"
+        }
+      ],
+      "caption": "Turn 2 | blue=305 | red=280 | casualties=0",
+      "casualties_by_unit": {},
+      "combat_summary": "No localized engagements met contact or fire criteria this turn.",
+      "engaged_unit_ids": [],
+      "file_name": "turn_002.svg",
+      "moved_unit_ids": [
+        "blue-guard",
+        "blue-spearhead",
+        "red-block"
+      ],
+      "notes": [
+        "blue-guard advanced to (7,5) via move.",
+        "blue-spearhead advanced to (7,7) via move.",
+        "red-block advanced to (10,7) via withdraw.",
+        "Combat skipped.",
+        "Turn advanced."
+      ],
+      "turn": 2,
+      "units": [
+        {
+          "faction": "blue",
+          "position": {
+            "q": 7,
+            "r": 5
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 95,
+          "unit_id": "blue-guard"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 6,
+            "r": 7
+          },
+          "posture": "defend",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "blue-rear"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 7,
+            "r": 7
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 125,
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 10,
+            "r": 7
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 110,
+          "unit_id": "red-block"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 10,
+            "r": 5
+          },
+          "posture": "defend",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "red-north"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 8,
+            "r": 9
+          },
+          "posture": "defend",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "red-south"
+        }
+      ],
+      "winner": null
+    },
+    {
+      "action_overlays": [
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 7,
+            "r": 5
+          },
+          "target": {
+            "q": 8,
+            "r": 5
+          },
+          "unit_id": "blue-guard"
+        },
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 7,
+            "r": 7
+          },
+          "target": {
+            "q": 8,
+            "r": 7
+          },
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 10,
+            "r": 7
+          },
+          "target": {
+            "q": 11,
+            "r": 6
+          },
+          "unit_id": "red-block"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 10,
+            "r": 5
+          },
+          "target": {
+            "q": 10,
+            "r": 6
+          },
+          "unit_id": "red-north"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 8,
+            "r": 9
+          },
+          "target": {
+            "q": 9,
+            "r": 9
+          },
+          "unit_id": "red-south"
+        }
+      ],
+      "caption": "Turn 3 | blue=305 | red=280 | casualties=0",
+      "casualties_by_unit": {},
+      "combat_summary": "No localized engagements met contact or fire criteria this turn.",
+      "engaged_unit_ids": [],
+      "file_name": "turn_003.svg",
+      "moved_unit_ids": [
+        "blue-guard",
+        "blue-spearhead",
+        "red-block",
+        "red-north",
+        "red-south"
+      ],
+      "notes": [
+        "blue-guard advanced to (8,5) via move.",
+        "blue-spearhead advanced to (8,7) via move.",
+        "red-block advanced to (11,6) via withdraw.",
+        "red-north advanced to (10,6) via withdraw.",
+        "red-south advanced to (9,9) via withdraw.",
+        "Combat skipped.",
+        "Turn advanced."
+      ],
+      "turn": 3,
+      "units": [
+        {
+          "faction": "blue",
+          "position": {
+            "q": 8,
+            "r": 5
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 95,
+          "unit_id": "blue-guard"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 6,
+            "r": 7
+          },
+          "posture": "defend",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "blue-rear"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 8,
+            "r": 7
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 125,
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 11,
+            "r": 6
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 110,
+          "unit_id": "red-block"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 10,
+            "r": 6
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "red-north"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 9,
+            "r": 9
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "red-south"
+        }
+      ],
+      "winner": null
+    },
+    {
+      "action_overlays": [
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 8,
+            "r": 5
+          },
+          "target": {
+            "q": 8,
+            "r": 6
+          },
+          "unit_id": "blue-guard"
+        },
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 6,
+            "r": 7
+          },
+          "target": {
+            "q": 7,
+            "r": 7
+          },
+          "unit_id": "blue-rear"
+        },
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 8,
+            "r": 7
+          },
+          "target": {
+            "q": 9,
+            "r": 6
+          },
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 11,
+            "r": 6
+          },
+          "target": {
+            "q": 12,
+            "r": 6
+          },
+          "unit_id": "red-block"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 10,
+            "r": 6
+          },
+          "target": {
+            "q": 10,
+            "r": 7
+          },
+          "unit_id": "red-north"
+        }
+      ],
+      "caption": "Turn 4 | blue=305 | red=280 | casualties=0",
+      "casualties_by_unit": {},
+      "combat_summary": "No localized engagements met contact or fire criteria this turn.",
+      "engaged_unit_ids": [],
+      "file_name": "turn_004.svg",
+      "moved_unit_ids": [
+        "blue-guard",
+        "blue-rear",
+        "blue-spearhead",
+        "red-block",
+        "red-north"
+      ],
+      "notes": [
+        "blue-guard advanced to (8,6) via move.",
+        "blue-rear advanced to (7,7) via move.",
+        "blue-spearhead advanced to (9,6) via move.",
+        "red-block advanced to (12,6) via withdraw.",
+        "red-north advanced to (10,7) via withdraw.",
+        "Combat skipped.",
+        "Turn advanced."
+      ],
+      "turn": 4,
+      "units": [
+        {
+          "faction": "blue",
+          "position": {
+            "q": 8,
+            "r": 6
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 95,
+          "unit_id": "blue-guard"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 7,
+            "r": 7
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "blue-rear"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 9,
+            "r": 6
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 125,
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 12,
+            "r": 6
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 110,
+          "unit_id": "red-block"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 10,
+            "r": 7
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "red-north"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 9,
+            "r": 9
+          },
+          "posture": "defend",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "red-south"
+        }
+      ],
+      "winner": null
+    },
+    {
+      "action_overlays": [
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 8,
+            "r": 6
+          },
+          "target": {
+            "q": 8,
+            "r": 7
+          },
+          "unit_id": "blue-guard"
+        },
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 7,
+            "r": 7
+          },
+          "target": {
+            "q": 8,
+            "r": 7
+          },
+          "unit_id": "blue-rear"
+        },
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 9,
+            "r": 6
+          },
+          "target": {
+            "q": 10,
+            "r": 6
+          },
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 12,
+            "r": 6
+          },
+          "target": {
+            "q": 13,
+            "r": 6
+          },
+          "unit_id": "red-block"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 10,
+            "r": 7
+          },
+          "target": {
+            "q": 10,
+            "r": 8
+          },
+          "unit_id": "red-north"
+        }
+      ],
+      "caption": "Turn 5 | blue=305 | red=280 | casualties=0",
+      "casualties_by_unit": {},
+      "combat_summary": "No localized engagements met contact or fire criteria this turn.",
+      "engaged_unit_ids": [],
+      "file_name": "turn_005.svg",
+      "moved_unit_ids": [
+        "blue-guard",
+        "blue-rear",
+        "blue-spearhead",
+        "red-block",
+        "red-north"
+      ],
+      "notes": [
+        "blue-guard advanced to (8,7) via move.",
+        "blue-rear advanced to (8,7) via move.",
+        "blue-spearhead advanced to (10,6) via move.",
+        "red-block advanced to (13,6) via withdraw.",
+        "red-north advanced to (10,8) via withdraw.",
+        "Combat skipped.",
+        "Turn advanced."
+      ],
+      "turn": 5,
+      "units": [
+        {
+          "faction": "blue",
+          "position": {
+            "q": 8,
+            "r": 7
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 95,
+          "unit_id": "blue-guard"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 8,
+            "r": 7
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "blue-rear"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 10,
+            "r": 6
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 125,
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 13,
+            "r": 6
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 110,
+          "unit_id": "red-block"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 10,
+            "r": 8
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "red-north"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 9,
+            "r": 9
+          },
+          "posture": "defend",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "red-south"
+        }
+      ],
+      "winner": null
+    },
+    {
+      "action_overlays": [
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 8,
+            "r": 7
+          },
+          "target": {
+            "q": 8,
+            "r": 8
+          },
+          "unit_id": "blue-guard"
+        },
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 8,
+            "r": 7
+          },
+          "target": {
+            "q": 8,
+            "r": 8
+          },
+          "unit_id": "blue-rear"
+        },
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 10,
+            "r": 6
+          },
+          "target": {
+            "q": 10,
+            "r": 7
+          },
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 10,
+            "r": 8
+          },
+          "target": {
+            "q": 10,
+            "r": 9
+          },
+          "unit_id": "red-north"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 9,
+            "r": 9
+          },
+          "target": {
+            "q": 10,
+            "r": 9
+          },
+          "unit_id": "red-south"
+        }
+      ],
+      "caption": "Turn 6 | blue=305 | red=280 | casualties=0",
+      "casualties_by_unit": {},
+      "combat_summary": "No localized engagements met contact or fire criteria this turn.",
+      "engaged_unit_ids": [],
+      "file_name": "turn_006.svg",
+      "moved_unit_ids": [
+        "blue-guard",
+        "blue-rear",
+        "blue-spearhead",
+        "red-north",
+        "red-south"
+      ],
+      "notes": [
+        "blue-guard advanced to (8,8) via move.",
+        "blue-rear advanced to (8,8) via move.",
+        "blue-spearhead advanced to (10,7) via move.",
+        "red-north advanced to (10,9) via withdraw.",
+        "red-south advanced to (10,9) via withdraw.",
+        "Combat skipped.",
+        "Turn advanced."
+      ],
+      "turn": 6,
+      "units": [
+        {
+          "faction": "blue",
+          "position": {
+            "q": 8,
+            "r": 8
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 95,
+          "unit_id": "blue-guard"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 8,
+            "r": 8
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "blue-rear"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 10,
+            "r": 7
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 125,
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 13,
+            "r": 6
+          },
+          "posture": "defend",
+          "status": "ready",
+          "strength": 110,
+          "unit_id": "red-block"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 10,
+            "r": 9
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "red-north"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 10,
+            "r": 9
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "red-south"
+        }
+      ],
+      "winner": null
+    },
+    {
+      "action_overlays": [
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 8,
+            "r": 8
+          },
+          "target": {
+            "q": 8,
+            "r": 9
+          },
+          "unit_id": "blue-guard"
+        },
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 8,
+            "r": 8
+          },
+          "target": {
+            "q": 8,
+            "r": 9
+          },
+          "unit_id": "blue-rear"
+        },
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 10,
+            "r": 7
+          },
+          "target": {
+            "q": 10,
+            "r": 8
+          },
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 10,
+            "r": 9
+          },
+          "target": {
+            "q": 10,
+            "r": 10
+          },
+          "unit_id": "red-north"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 10,
+            "r": 9
+          },
+          "target": {
+            "q": 9,
+            "r": 10
+          },
+          "unit_id": "red-south"
+        }
+      ],
+      "caption": "Turn 7 | blue=305 | red=280 | casualties=0",
+      "casualties_by_unit": {},
+      "combat_summary": "No localized engagements met contact or fire criteria this turn.",
+      "engaged_unit_ids": [],
+      "file_name": "turn_007.svg",
+      "moved_unit_ids": [
+        "blue-guard",
+        "blue-rear",
+        "blue-spearhead",
+        "red-north",
+        "red-south"
+      ],
+      "notes": [
+        "blue-guard advanced to (8,9) via move.",
+        "blue-rear advanced to (8,9) via move.",
+        "blue-spearhead advanced to (10,8) via move.",
+        "red-north advanced to (10,10) via withdraw.",
+        "red-south advanced to (9,10) via withdraw.",
+        "Combat skipped.",
+        "Turn advanced."
+      ],
+      "turn": 7,
+      "units": [
+        {
+          "faction": "blue",
+          "position": {
+            "q": 8,
+            "r": 9
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 95,
+          "unit_id": "blue-guard"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 8,
+            "r": 9
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "blue-rear"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 10,
+            "r": 8
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 125,
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 13,
+            "r": 6
+          },
+          "posture": "defend",
+          "status": "ready",
+          "strength": 110,
+          "unit_id": "red-block"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 10,
+            "r": 10
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "red-north"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 9,
+            "r": 10
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "red-south"
+        }
+      ],
+      "winner": null
+    },
+    {
+      "action_overlays": [
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 8,
+            "r": 9
+          },
+          "target": {
+            "q": 8,
+            "r": 10
+          },
+          "unit_id": "blue-guard"
+        },
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 8,
+            "r": 9
+          },
+          "target": {
+            "q": 8,
+            "r": 10
+          },
+          "unit_id": "blue-rear"
+        },
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 10,
+            "r": 8
+          },
+          "target": {
+            "q": 10,
+            "r": 9
+          },
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 10,
+            "r": 10
+          },
+          "target": {
+            "q": 11,
+            "r": 10
+          },
+          "unit_id": "red-north"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 9,
+            "r": 10
+          },
+          "target": {
+            "q": 10,
+            "r": 10
+          },
+          "unit_id": "red-south"
+        }
+      ],
+      "caption": "Turn 8 | blue=303 | red=274 | casualties=8 | winner=blue",
+      "casualties_by_unit": {
+        "blue-spearhead": 2,
+        "red-south": 6
+      },
+      "combat_summary": "Resolved 1 localized engagement(s); Blue losses=2, Red losses=6.",
+      "engaged_unit_ids": [
+        "blue-spearhead",
+        "red-south"
+      ],
+      "file_name": "turn_008.svg",
+      "moved_unit_ids": [
+        "blue-guard",
+        "blue-rear",
+        "blue-spearhead",
+        "red-north",
+        "red-south"
+      ],
+      "notes": [
+        "blue-guard advanced to (8,10) via move.",
+        "blue-rear advanced to (8,10) via move.",
+        "blue-spearhead advanced to (10,9) via move.",
+        "red-north advanced to (11,10) via withdraw.",
+        "red-south advanced to (10,10) via withdraw.",
+        "Combat resolved.",
+        "Turn advanced."
+      ],
+      "turn": 8,
+      "units": [
+        {
+          "faction": "blue",
+          "position": {
+            "q": 8,
+            "r": 10
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 95,
+          "unit_id": "blue-guard"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 8,
+            "r": 10
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "blue-rear"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 10,
+            "r": 9
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 123,
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 13,
+            "r": 6
+          },
+          "posture": "defend",
+          "status": "ready",
+          "strength": 110,
+          "unit_id": "red-block"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 11,
+            "r": 10
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "red-north"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 10,
+            "r": 10
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 79,
+          "unit_id": "red-south"
+        }
+      ],
+      "winner": "blue"
+    },
+    {
+      "action_overlays": [
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 8,
+            "r": 10
+          },
+          "target": {
+            "q": 9,
+            "r": 10
+          },
+          "unit_id": "blue-guard"
+        },
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 8,
+            "r": 10
+          },
+          "target": {
+            "q": 9,
+            "r": 10
+          },
+          "unit_id": "blue-rear"
+        },
+        {
+          "action_type": "attack",
+          "faction": "blue",
+          "origin": {
+            "q": 10,
+            "r": 9
+          },
+          "target": {
+            "q": 10,
+            "r": 10
+          },
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 11,
+            "r": 10
+          },
+          "target": {
+            "q": 12,
+            "r": 10
+          },
+          "unit_id": "red-north"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 10,
+            "r": 10
+          },
+          "target": {
+            "q": 10,
+            "r": 11
+          },
+          "unit_id": "red-south"
+        }
+      ],
+      "caption": "Turn 9 | blue=303 | red=274 | casualties=0",
+      "casualties_by_unit": {},
+      "combat_summary": "No localized engagements met contact or fire criteria this turn.",
+      "engaged_unit_ids": [],
+      "file_name": "turn_009.svg",
+      "moved_unit_ids": [
+        "blue-guard",
+        "blue-rear",
+        "red-north",
+        "red-south"
+      ],
+      "notes": [
+        "blue-guard advanced to (9,10) via move.",
+        "blue-rear advanced to (9,10) via move.",
+        "blue-spearhead committed to attack toward (10,10).",
+        "red-north advanced to (12,10) via withdraw.",
+        "red-south advanced to (10,11) via withdraw.",
+        "Combat skipped.",
+        "Turn advanced."
+      ],
+      "turn": 9,
+      "units": [
+        {
+          "faction": "blue",
+          "position": {
+            "q": 9,
+            "r": 10
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 95,
+          "unit_id": "blue-guard"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 9,
+            "r": 10
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "blue-rear"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 10,
+            "r": 9
+          },
+          "posture": "attack",
+          "status": "ready",
+          "strength": 123,
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 13,
+            "r": 6
+          },
+          "posture": "defend",
+          "status": "ready",
+          "strength": 110,
+          "unit_id": "red-block"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 12,
+            "r": 10
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "red-north"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 10,
+            "r": 11
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 79,
+          "unit_id": "red-south"
+        }
+      ],
+      "winner": null
+    },
+    {
+      "action_overlays": [
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 9,
+            "r": 10
+          },
+          "target": {
+            "q": 9,
+            "r": 11
+          },
+          "unit_id": "blue-guard"
+        },
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 9,
+            "r": 10
+          },
+          "target": {
+            "q": 9,
+            "r": 11
+          },
+          "unit_id": "blue-rear"
+        },
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 10,
+            "r": 9
+          },
+          "target": {
+            "q": 10,
+            "r": 10
+          },
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 12,
+            "r": 10
+          },
+          "target": {
+            "q": 13,
+            "r": 9
+          },
+          "unit_id": "red-north"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 10,
+            "r": 11
+          },
+          "target": {
+            "q": 11,
+            "r": 11
+          },
+          "unit_id": "red-south"
+        }
+      ],
+      "caption": "Turn 10 | blue=303 | red=274 | casualties=0",
+      "casualties_by_unit": {},
+      "combat_summary": "No localized engagements met contact or fire criteria this turn.",
+      "engaged_unit_ids": [],
+      "file_name": "turn_010.svg",
+      "moved_unit_ids": [
+        "blue-guard",
+        "blue-rear",
+        "blue-spearhead",
+        "red-north",
+        "red-south"
+      ],
+      "notes": [
+        "blue-guard advanced to (9,11) via move.",
+        "blue-rear advanced to (9,11) via move.",
+        "blue-spearhead advanced to (10,10) via move.",
+        "red-north advanced to (13,9) via withdraw.",
+        "red-south advanced to (11,11) via withdraw.",
+        "Combat skipped.",
+        "Turn advanced."
+      ],
+      "turn": 10,
+      "units": [
+        {
+          "faction": "blue",
+          "position": {
+            "q": 9,
+            "r": 11
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 95,
+          "unit_id": "blue-guard"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 9,
+            "r": 11
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "blue-rear"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 10,
+            "r": 10
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 123,
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 13,
+            "r": 6
+          },
+          "posture": "defend",
+          "status": "ready",
+          "strength": 110,
+          "unit_id": "red-block"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 13,
+            "r": 9
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "red-north"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 11,
+            "r": 11
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 79,
+          "unit_id": "red-south"
+        }
+      ],
+      "winner": null
+    },
+    {
+      "action_overlays": [
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 9,
+            "r": 11
+          },
+          "target": {
+            "q": 10,
+            "r": 11
+          },
+          "unit_id": "blue-guard"
+        },
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 9,
+            "r": 11
+          },
+          "target": {
+            "q": 10,
+            "r": 11
+          },
+          "unit_id": "blue-rear"
+        },
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 10,
+            "r": 10
+          },
+          "target": {
+            "q": 10,
+            "r": 11
+          },
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "action_type": "move",
+          "faction": "red",
+          "origin": {
+            "q": 13,
+            "r": 6
+          },
+          "target": {
+            "q": 13,
+            "r": 7
+          },
+          "unit_id": "red-block"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 11,
+            "r": 11
+          },
+          "target": {
+            "q": 11,
+            "r": 12
+          },
+          "unit_id": "red-south"
+        }
+      ],
+      "caption": "Turn 11 | blue=303 | red=274 | casualties=0",
+      "casualties_by_unit": {},
+      "combat_summary": "No localized engagements met contact or fire criteria this turn.",
+      "engaged_unit_ids": [],
+      "file_name": "turn_011.svg",
+      "moved_unit_ids": [
+        "blue-guard",
+        "blue-rear",
+        "blue-spearhead",
+        "red-block",
+        "red-south"
+      ],
+      "notes": [
+        "blue-guard advanced to (10,11) via move.",
+        "blue-rear advanced to (10,11) via move.",
+        "blue-spearhead advanced to (10,11) via move.",
+        "red-block advanced to (13,7) via move.",
+        "red-south advanced to (11,12) via withdraw.",
+        "Combat skipped.",
+        "Turn advanced."
+      ],
+      "turn": 11,
+      "units": [
+        {
+          "faction": "blue",
+          "position": {
+            "q": 10,
+            "r": 11
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 95,
+          "unit_id": "blue-guard"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 10,
+            "r": 11
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "blue-rear"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 10,
+            "r": 11
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 123,
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 13,
+            "r": 7
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 110,
+          "unit_id": "red-block"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 13,
+            "r": 9
+          },
+          "posture": "defend",
+          "status": "ready",
+          "strength": 85,
+          "unit_id": "red-north"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 11,
+            "r": 12
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 79,
+          "unit_id": "red-south"
+        }
+      ],
+      "winner": null
+    },
+    {
+      "action_overlays": [
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 10,
+            "r": 11
+          },
+          "target": {
+            "q": 10,
+            "r": 12
+          },
+          "unit_id": "blue-guard"
+        },
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 10,
+            "r": 11
+          },
+          "target": {
+            "q": 11,
+            "r": 11
+          },
+          "unit_id": "blue-rear"
+        },
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 10,
+            "r": 11
+          },
+          "target": {
+            "q": 11,
+            "r": 11
+          },
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "action_type": "move",
+          "faction": "red",
+          "origin": {
+            "q": 13,
+            "r": 7
+          },
+          "target": {
+            "q": 13,
+            "r": 8
+          },
+          "unit_id": "red-block"
+        },
+        {
+          "action_type": "move",
+          "faction": "red",
+          "origin": {
+            "q": 13,
+            "r": 9
+          },
+          "target": {
+            "q": 12,
+            "r": 10
+          },
+          "unit_id": "red-north"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 11,
+            "r": 12
+          },
+          "target": {
+            "q": 12,
+            "r": 12
+          },
+          "unit_id": "red-south"
+        }
+      ],
+      "caption": "Turn 12 | blue=300 | red=266 | casualties=11 | winner=blue",
+      "casualties_by_unit": {
+        "blue-rear": 1,
+        "blue-spearhead": 2,
+        "red-north": 8
+      },
+      "combat_summary": "Resolved 1 localized engagement(s); Blue losses=3, Red losses=8.",
+      "engaged_unit_ids": [
+        "blue-rear",
+        "blue-spearhead",
+        "red-north"
+      ],
+      "file_name": "turn_012.svg",
+      "moved_unit_ids": [
+        "blue-guard",
+        "blue-rear",
+        "blue-spearhead",
+        "red-block",
+        "red-north",
+        "red-south"
+      ],
+      "notes": [
+        "blue-guard advanced to (10,12) via move.",
+        "blue-rear advanced to (11,11) via move.",
+        "blue-spearhead advanced to (11,11) via move.",
+        "red-block advanced to (13,8) via move.",
+        "red-north advanced to (12,10) via move.",
+        "red-south advanced to (12,12) via withdraw.",
+        "Combat resolved.",
+        "Turn advanced."
+      ],
+      "turn": 12,
+      "units": [
+        {
+          "faction": "blue",
+          "position": {
+            "q": 10,
+            "r": 12
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 95,
+          "unit_id": "blue-guard"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 11,
+            "r": 11
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 84,
+          "unit_id": "blue-rear"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 11,
+            "r": 11
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 121,
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 13,
+            "r": 8
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 110,
+          "unit_id": "red-block"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 12,
+            "r": 10
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 77,
+          "unit_id": "red-north"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 12,
+            "r": 12
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 79,
+          "unit_id": "red-south"
+        }
+      ],
+      "winner": "blue"
+    },
+    {
+      "action_overlays": [
+        {
+          "action_type": "move",
+          "faction": "blue",
+          "origin": {
+            "q": 10,
+            "r": 12
+          },
+          "target": {
+            "q": 11,
+            "r": 11
+          },
+          "unit_id": "blue-guard"
+        },
+        {
+          "action_type": "attack",
+          "faction": "blue",
+          "origin": {
+            "q": 11,
+            "r": 11
+          },
+          "target": {
+            "q": 12,
+            "r": 10
+          },
+          "unit_id": "blue-rear"
+        },
+        {
+          "action_type": "attack",
+          "faction": "blue",
+          "origin": {
+            "q": 11,
+            "r": 11
+          },
+          "target": {
+            "q": 12,
+            "r": 10
+          },
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "action_type": "move",
+          "faction": "red",
+          "origin": {
+            "q": 13,
+            "r": 8
+          },
+          "target": {
+            "q": 13,
+            "r": 9
+          },
+          "unit_id": "red-block"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 12,
+            "r": 10
+          },
+          "target": {
+            "q": 12,
+            "r": 9
+          },
+          "unit_id": "red-north"
+        },
+        {
+          "action_type": "withdraw",
+          "faction": "red",
+          "origin": {
+            "q": 12,
+            "r": 12
+          },
+          "target": {
+            "q": 13,
+            "r": 12
+          },
+          "unit_id": "red-south"
+        }
+      ],
+      "caption": "Turn 13 | blue=300 | red=266 | casualties=0",
+      "casualties_by_unit": {},
+      "combat_summary": "No localized engagements met contact or fire criteria this turn.",
+      "engaged_unit_ids": [],
+      "file_name": "turn_013.svg",
+      "moved_unit_ids": [
+        "blue-guard",
+        "red-block",
+        "red-north",
+        "red-south"
+      ],
+      "notes": [
+        "blue-guard advanced to (11,11) via move.",
+        "blue-rear committed to attack toward (12,10).",
+        "blue-spearhead committed to attack toward (12,10).",
+        "red-block advanced to (13,9) via move.",
+        "red-north advanced to (12,9) via withdraw.",
+        "red-south advanced to (13,12) via withdraw.",
+        "Combat skipped.",
+        "Turn advanced."
+      ],
+      "turn": 13,
+      "units": [
+        {
+          "faction": "blue",
+          "position": {
+            "q": 11,
+            "r": 11
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 95,
+          "unit_id": "blue-guard"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 11,
+            "r": 11
+          },
+          "posture": "attack",
+          "status": "ready",
+          "strength": 84,
+          "unit_id": "blue-rear"
+        },
+        {
+          "faction": "blue",
+          "position": {
+            "q": 11,
+            "r": 11
+          },
+          "posture": "attack",
+          "status": "ready",
+          "strength": 121,
+          "unit_id": "blue-spearhead"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 13,
+            "r": 9
+          },
+          "posture": "maneuver",
+          "status": "ready",
+          "strength": 110,
+          "unit_id": "red-block"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 12,
+            "r": 9
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 77,
+          "unit_id": "red-north"
+        },
+        {
+          "faction": "red",
+          "position": {
+            "q": 13,
+            "r": 12
+          },
+          "posture": "withdraw",
+          "status": "ready",
+          "strength": 79,
+          "unit_id": "red-south"
+        }
+      ],
+      "winner": null
+    }
+  ],
+  "objective_hexes": {
+    "blue": [
+      {
+        "q": 13,
+        "r": 7
+      }
+    ],
+    "red": [
+      {
+        "q": 10,
+        "r": 7
+      }
+    ]
+  },
+  "run_label": "s5-breakout-rule-vs-rule-seed-8",
+  "terrain_by_hex": {
+    "12,7": "forest",
+    "13,7": "forest",
+    "7,6": "forest",
+    "7,7": "forest",
+    "8,7": "urban"
+  },
+  "title": "Force Strength Over Turns - Breakout (s5-breakout-rule-vs-rule-seed-8)"
+}

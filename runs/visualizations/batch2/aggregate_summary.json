@@ -1,0 +1,27 @@
+{
+  "agent_names": [
+    "blue_agent",
+    "local_llm:mlx-community/Qwen2.5-7B-Instruct-4bit",
+    "red_rule",
+    "rule"
+  ],
+  "blue_win_rate": 0.23076923076923078,
+  "inference_timing": {
+    "max_seconds": 82.5782,
+    "mean_seconds": 17.327172276108776,
+    "sample_count": 624
+  },
+  "input_log_count": 26,
+  "mean_action_entropy": 1.9957582627349422,
+  "mean_blue_remaining_force_ratio": 0.8243589743589743,
+  "mean_escalation_sensitivity_index": 0.13356573981573983,
+  "mean_json_parsing_success_rate": 0.5256410256410257,
+  "mean_red_remaining_force_ratio": 0.9146153846153846,
+  "mean_tactic_transition_frequency": 0.3820630261388879,
+  "mean_turns": 12.0,
+  "red_win_rate": 0.7307692307692307,
+  "run_count": 26,
+  "scenario_ids": [
+    "s1_open_encounter"
+  ]
+}

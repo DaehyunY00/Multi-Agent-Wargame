@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Force Strength Over Turns - River Crossing (s4-river-crossing-rule-vs-rule-seed-46)</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f3f1ea;
+      --panel: #fffdf8;
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --line: #d6d3cd;
+      --accent: #1d4ed8;
+    }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: linear-gradient(180deg, #f7f5ef 0%, #ece8dd 100%);
+    }
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 12px 30px rgba(17, 24, 39, 0.08);
+      overflow: hidden;
+    }
+    .header {
+      padding: 20px 24px 8px;
+    }
+    h1 {
+      margin: 0 0 6px;
+      font-size: 28px;
+    }
+    .muted {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 16px 24px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.7);
+    }
+    button {
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    input[type="range"] {
+      flex: 1 1 260px;
+    }
+    .viewer {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 0;
+    }
+    .frame {
+      background: #f7f7f2;
+      min-height: 480px;
+    }
+    .frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .sidebar {
+      border-left: 1px solid var(--line);
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.86);
+    }
+    .sidebar h2 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+    .sidebar pre {
+      white-space: pre-wrap;
+      word-break: keep-all;
+      font-family: inherit;
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 0;
+      color: var(--ink);
+    }
+    @media (max-width: 960px) {
+      .viewer {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        border-left: 0;
+        border-top: 1px solid var(--line);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="header">
+        <h1>Force Strength Over Turns - River Crossing (s4-river-crossing-rule-vs-rule-seed-46)</h1>
+        <div class="muted">턴별 상태 스냅샷, 이동 의도선, 교전/피해 강조를 포함한 전장 replay</div>
+      </div>
+      <div class="controls">
+        <button id="prev-btn" type="button">이전</button>
+        <button id="play-btn" type="button">재생</button>
+        <button id="next-btn" type="button">다음</button>
+        <input id="turn-slider" type="range" min="0" max="0" value="0" />
+        <span id="turn-label" class="muted"></span>
+      </div>
+      <div class="viewer">
+        <div class="frame">
+          <img id="frame-img" alt="Battlefield replay frame" />
+        </div>
+        <aside class="sidebar">
+          <h2 id="frame-title">Turn</h2>
+          <pre id="frame-notes"></pre>
+        </aside>
+      </div>
+    </div>
+  </div>
+  <script id="replay-data" type="application/json">{"run_label": "s4-river-crossing-rule-vs-rule-seed-46", "title": "Force Strength Over Turns - River Crossing (s4-river-crossing-rule-vs-rule-seed-46)", "frame_count": 14, "bounds": {"min_q": 4, "max_q": 15, "min_r": 3, "max_r": 15}, "terrain_by_hex": {"10,6": "forest", "11,6": "urban", "9,4": "river", "9,5": "river", "9,6": "river", "9,7": "river", "9,8": "river"}, "objective_hexes": {"blue": [{"q": 10, "r": 6}], "red": [{"q": 10, "r": 6}]}, "frames": [{"turn": 1, "file_name": "turn_001.svg", "caption": "Turn 1 | blue=305 | red=300 | casualties=0", "units": [{"unit_id": "blue-bridgehead", "faction": "blue", "position": {"q": 7, "r": 6}, "strength": 120, "status": "ready", "posture": "maneuver"}, {"unit_id": "blue-screen", "faction": "blue", "position": {"q": 5, "r": 7}, "strength": 85, "status": "ready", "posture": "defend"}, {"unit_id": "blue-support", "faction": "blue", "position": {"q": 6, "r": 8}, "strength": 100, "status": "ready", "posture": "defend"}, {"unit_id": "red-reserve", "faction": "red", "position": {"q": 12, "r": 8}, "strength": 90, "status": "ready", "posture": "defend"}, {"unit_id": "red-riverline", "faction": "red", "position": {"q": 10, "r": 6}, "strength": 115, "status": "ready", "posture": "defend"}, {"unit_id": "red-town", "faction": "red", "position": {"q": 11, "r": 6}, "strength": 95, "status": "ready", "posture": "defend"}], "engaged_unit_ids": [], "moved_unit_ids": [], "casualties_by_unit": {}, "combat_summary": "No localized engagements met contact or fire criteria this turn.", "winner": null, "notes": ["blue-bridgehead advanced to (7,6) via move.", "Combat skipped.", "Turn advanced."], "action_overlays": [{"unit_id": "blue-bridgehead", "faction": "blue", "action_type": "move", "origin": {"q": 7, "r": 6}, "target": {"q": 7, "r": 6}}]}, {"turn": 2, "file_name": "turn_002.svg", "caption": "Turn 2 | blue=305 | red=300 | casualties=0", "units": [{"unit_id": "blue-bridgehead", "faction": "blue", "position": {"q": 8, "r": 6}, "strength": 120, "status": "ready", "posture": "maneuver"}, {"unit_id": "blue-screen", "faction": "blue", "position": {"q": 5, "r": 7}, "strength": 85, "status": "ready", "posture": "defend"}, {"unit_id": "blue-support", "faction": "blue", "position": {"q": 6, "r": 8}, "strength": 100, "status": "ready", "posture": "defend"}, {"unit_id": "red-reserve", "faction": "red", "position": {"q": 12, "r": 8}, "strength": 90, "status": "ready", "posture": "defend"}, {"unit_id": "red-riverline", "faction": "red", "position": {"q": 11, "r": 6}, "strength": 115, "status": "ready", "posture": "withdraw"}, {"unit_id": "red-town", "faction": "red", "position": {"q": 11, "r": 6}, "strength": 95, "status": "ready", "posture": "defend"}], "engaged_unit_ids": [], "moved_unit_ids": ["blue-bridgehead", "red-riverline"], "casualties_by_unit": {}, "combat_summary": "No localized engagements met contact or fire criteria this turn.", "winner": null, "notes": ["blue-bridgehead advanced to (8,6) via move.", "red-riverline advanced to (11,6) via withdraw.", "Combat skipped.", "Turn advanced."], "action_overlays": [{"unit_id": "blue-bridgehead", "faction": "blue", "action_type": "move", "origin": {"q": 7, "r": 6}, "target": {"q": 8, "r": 6}}, {"unit_id": "red-riverline", "faction": "red", "action_type": "withdraw", "origin": {"q": 10, "r": 6}, "target": {"q": 11, "r": 6}}]}, {"turn": 3, "file_name": "turn_003.svg", "caption": "Turn 3 | blue=305 | red=300 | casualties=0", "units": [{"unit_id": "blue-bridgehead", "faction": "blue", "position": {"q": 9, "r": 6}, "strength": 120, "status": "ready", "posture": "maneuver"}, {"unit_id": "blue-screen", "faction": "blue", "position": {"q": 5, "r": 7}, "strength": 85, "status": "ready", "posture": "defend"}, {"unit_id": "blue-support", "faction": "blue", "position": {"q": 6, "r": 8}, "strength": 100, "status": "ready", "posture": "defend"}, {"unit_id": "red-reserve", "faction": "red", "position": {"q": 12, "r": 8}, "strength": 90, "status": "ready", "posture": "defend"}, {"unit_id": "red-riverline", "faction": "red", "position": {"q": 12, "r": 6}, "strength": 115, "status": "ready", "posture": "withdraw"}, {"unit_id": "red-town", "faction": "red", "position": {"q": 12, "r": 6}, "strength": 95, "status": "ready", "posture": "withdraw"}], "engaged_unit_ids": [], "moved_unit_ids": ["blue-bridgehead", "red-riverline", "red-town"], "casualties_by_unit": {}, "combat_summary": "No localized engagements met contact or fire criteria this turn.", "winner": null, "notes": ["blue-bridgehead advanced to (9,6) via move.", "red-riverline advanced to (12,6) via withdraw.", "red-town advanced to (12,6) via withdraw.", "Combat skipped.", "Turn advanced."], "action_overlays": [{"unit_id": "blue-bridgehead", "faction": "blue", "action_type": "move", "origin": {"q": 8, "r": 6}, "target": {"q": 9, "r": 6}}, {"unit_id": "red-riverline", "faction": "red", "action_type": "withdraw", "origin": {"q": 11, "r": 6}, "target": {"q": 12, "r": 6}}, {"unit_id": "red-town", "faction": "red", "action_type": "withdraw", "origin": {"q": 11, "r": 6}, "target": {"q": 12, "r": 6}}]}, {"turn": 4, "file_name": "turn_004.svg", "caption": "Turn 4 | blue=305 | red=300 | casualties=0", "units": [{"unit_id": "blue-bridgehead", "faction": "blue", "position": {"q": 10, "r": 6}, "strength": 120, "status": "ready", "posture": "maneuver"}, {"unit_id": "blue-screen", "faction": "blue", "position": {"q": 5, "r": 7}, "strength": 85, "status": "ready", "posture": "defend"}, {"unit_id": "blue-support", "faction": "blue", "position": {"q": 7, "r": 8}, "strength": 100, "status": "ready", "posture": "maneuver"}, {"unit_id": "red-reserve", "faction": "red", "position": {"q": 12, "r": 8}, "strength": 90, "status": "ready", "posture": "defend"}, {"unit_id": "red-riverline", "faction": "red", "position": {"q": 13, "r": 6}, "strength": 115, "status": "ready", "posture": "withdraw"}, {"unit_id": "red-town", "faction": "red", "position": {"q": 13, "r": 6}, "strength": 95, "status": "ready", "posture": "withdraw"}], "engaged_unit_ids": [], "moved_unit_ids": ["blue-bridgehead", "blue-support", "red-riverline", "red-town"], "casualties_by_unit": {}, "combat_summary": "No localized engagements met contact or fire criteria this turn.", "winner": null, "notes": ["blue-bridgehead advanced to (10,6) via move.", "blue-support advanced to (7,8) via move.", "red-riverline advanced to (13,6) via withdraw.", "red-town advanced to (13,6) via withdraw.", "Combat skipped.", "Turn advanced."], "action_overlays": [{"unit_id": "blue-bridgehead", "faction": "blue", "action_type": "move", "origin": {"q": 9, "r": 6}, "target": {"q": 10, "r": 6}}, {"unit_id": "blue-support", "faction": "blue", "action_type": "move", "origin": {"q": 6, "r": 8}, "target": {"q": 7, "r": 8}}, {"unit_id": "red-riverline", "faction": "red", "action_type": "withdraw", "origin": {"q": 12, "r": 6}, "target": {"q": 13, "r": 6}}, {"unit_id": "red-town", "faction": "red", "action_type": "withdraw", "origin": {"q": 12, "r": 6}, "target": {"q": 13, "r": 6}}]}, {"turn": 5, "file_name": "turn_005.svg", "caption": "Turn 5 | blue=305 | red=300 | casualties=0", "units": [{"unit_id": "blue-bridgehead", "faction": "blue", "position": {"q": 11, "r": 6}, "strength": 120, "status": "ready", "posture": "maneuver"}, {"unit_id": "blue-screen", "faction": "blue", "position": {"q": 5, "r": 7}, "strength": 85, "status": "ready", "posture": "defend"}, {"unit_id": "blue-support", "faction": "blue", "position": {"q": 8, "r": 8}, "strength": 100, "status": "ready", "posture": "maneuver"}, {"unit_id": "red-reserve", "faction": "red", "position": {"q": 12, "r": 8}, "strength": 90, "status": "ready", "posture": "defend"}, {"unit_id": "red-riverline", "faction": "red", "position": {"q": 14, "r": 5}, "strength": 115, "status": "ready", "posture": "withdraw"}, {"unit_id": "red-town", "faction": "red", "position": {"q": 14, "r": 5}, "strength": 95, "status": "ready", "posture": "withdraw"}], "engaged_unit_ids": [], "moved_unit_ids": ["blue-bridgehead", "blue-support", "red-riverline", "red-town"], "casualties_by_unit": {}, "combat_summary": "No localized engagements met contact or fire criteria this turn.", "winner": null, "notes": ["blue-bridgehead advanced to (11,6) via move.", "blue-support advanced to (8,8) via move.", "red-riverline advanced to (14,5) via withdraw.", "red-town advanced to (14,5) via withdraw.", "Combat skipped.", "Turn advanced."], "action_overlays": [{"unit_id": "blue-bridgehead", "faction": "blue", "action_type": "move", "origin": {"q": 10, "r": 6}, "target": {"q": 11, "r": 6}}, {"unit_id": "blue-support", "faction": "blue", "action_type": "move", "origin": {"q": 7, "r": 8}, "target": {"q": 8, "r": 8}}, {"unit_id": "red-riverline", "faction": "red", "action_type": "withdraw", "origin": {"q": 13, "r": 6}, "target": {"q": 14, "r": 5}}, {"unit_id": "red-town", "faction": "red", "action_type": "withdraw", "origin": {"q": 13, "r": 6}, "target": {"q": 14, "r": 5}}]}, {"turn": 6, "file_name": "turn_006.svg", "caption": "Turn 6 | blue=305 | red=300 | casualties=0", "units": [{"unit_id": "blue-bridgehead", "faction": "blue", "position": {"q": 11, "r": 7}, "strength": 120, "status": "ready", "posture": "maneuver"}, {"unit_id": "blue-screen", "faction": "blue", "position": {"q": 5, "r": 7}, "strength": 85, "status": "ready", "posture": "defend"}, {"unit_id": "blue-support", "faction": "blue", "position": {"q": 9, "r": 8}, "strength": 100, "status": "ready", "posture": "maneuver"}, {"unit_id": "red-reserve", "faction": "red", "position": {"q": 13, "r": 8}, "strength": 90, "status": "ready", "posture": "withdraw"}, {"unit_id": "red-riverline", "faction": "red", "position": {"q": 14, "r": 5}, "strength": 115, "status": "ready", "posture": "defend"}, {"unit_id": "red-town", "faction": "red", "position": {"q": 14, "r": 5}, "strength": 95, "status": "ready", "posture": "defend"}], "engaged_unit_ids": [], "moved_unit_ids": ["blue-bridgehead", "blue-support", "red-reserve"], "casualties_by_unit": {}, "combat_summary": "No localized engagements met contact or fire criteria this turn.", "winner": null, "notes": ["blue-bridgehead advanced to (11,7) via move.", "blue-support advanced to (9,8) via move.", "red-reserve advanced to (13,8) via withdraw.", "Combat skipped.", "Turn advanced."], "action_overlays": [{"unit_id": "blue-bridgehead", "faction": "blue", "action_type": "move", "origin": {"q": 11, "r": 6}, "target": {"q": 11, "r": 7}}, {"unit_id": "blue-support", "faction": "blue", "action_type": "move", "origin": {"q": 8, "r": 8}, "target": {"q": 9, "r": 8}}, {"unit_id": "red-reserve", "faction": "red", "action_type": "withdraw", "origin": {"q": 12, "r": 8}, "target": {"q": 13, "r": 8}}]}, {"turn": 7, "file_name": "turn_007.svg", "caption": "Turn 7 | blue=305 | red=300 | casualties=0", "units": [{"unit_id": "blue-bridgehead", "faction": "blue", "position": {"q": 11, "r": 8}, "strength": 120, "status": "ready", "posture": "maneuver"}, {"unit_id": "blue-screen", "faction": "blue", "position": {"q": 5, "r": 7}, "strength": 85, "status": "ready", "posture": "defend"}, {"unit_id": "blue-support", "faction": "blue", "position": {"q": 10, "r": 8}, "strength": 100, "status": "ready", "posture": "maneuver"}, {"unit_id": "red-reserve", "faction": "red", "position": {"q": 13, "r": 9}, "strength": 90, "status": "ready", "posture": "withdraw"}, {"unit_id": "red-riverline", "faction": "red", "position": {"q": 14, "r": 5}, "strength": 115, "status": "ready", "posture": "defend"}, {"unit_id": "red-town", "faction": "red", "position": {"q": 14, "r": 5}, "strength": 95, "status": "ready", "posture": "defend"}], "engaged_unit_ids": [], "moved_unit_ids": ["blue-bridgehead", "blue-support", "red-reserve"], "casualties_by_unit": {}, "combat_summary": "No localized engagements met contact or fire criteria this turn.", "winner": null, "notes": ["blue-bridgehead advanced to (11,8) via move.", "blue-support advanced to (10,8) via move.", "red-reserve advanced to (13,9) via withdraw.", "Combat skipped.", "Turn advanced."], "action_overlays": [{"unit_id": "blue-bridgehead", "faction": "blue", "action_type": "move", "origin": {"q": 11, "r": 7}, "target": {"q": 11, "r": 8}}, {"unit_id": "blue-support", "faction": "blue", "action_type": "move", "origin": {"q": 9, "r": 8}, "target": {"q": 10, "r": 8}}, {"unit_id": "red-reserve", "faction": "red", "action_type": "withdraw", "origin": {"q": 13, "r": 8}, "target": {"q": 13, "r": 9}}]}, {"turn": 8, "file_name": "turn_008.svg", "caption": "Turn 8 | blue=305 | red=300 | casualties=0", "units": [{"unit_id": "blue-bridgehead", "faction": "blue", "position": {"q": 12, "r": 8}, "strength": 120, "status": "ready", "posture": "maneuver"}, {"unit_id": "blue-screen", "faction": "blue", "position": {"q": 5, "r": 7}, "strength": 85, "status": "ready", "posture": "defend"}, {"unit_id": "blue-support", "faction": "blue", "position": {"q": 10, "r": 9}, "strength": 100, "status": "ready", "posture": "maneuver"}, {"unit_id": "red-reserve", "faction": "red", "position": {"q": 13, "r": 10}, "strength": 90, "status": "ready", "posture": "withdraw"}, {"unit_id": "red-riverline", "faction": "red", "position": {"q": 14, "r": 5}, "strength": 115, "status": "ready", "posture": "defend"}, {"unit_id": "red-town", "faction": "red", "position": {"q": 14, "r": 5}, "strength": 95, "status": "ready", "posture": "defend"}], "engaged_unit_ids": [], "moved_unit_ids": ["blue-bridgehead", "blue-support", "red-reserve"], "casualties_by_unit": {}, "combat_summary": "No localized engagements met contact or fire criteria this turn.", "winner": null, "notes": ["blue-bridgehead advanced to (12,8) via move.", "blue-support advanced to (10,9) via move.", "red-reserve advanced to (13,10) via withdraw.", "Combat skipped.", "Turn advanced."], "action_overlays": [{"unit_id": "blue-bridgehead", "faction": "blue", "action_type": "move", "origin": {"q": 11, "r": 8}, "target": {"q": 12, "r": 8}}, {"unit_id": "blue-support", "faction": "blue", "action_type": "move", "origin": {"q": 10, "r": 8}, "target": {"q": 10, "r": 9}}, {"unit_id": "red-reserve", "faction": "red", "action_type": "withdraw", "origin": {"q": 13, "r": 9}, "target": {"q": 13, "r": 10}}]}, {"turn": 9, "file_name": "turn_009.svg", "caption": "Turn 9 | blue=305 | red=300 | casualties=0", "units": [{"unit_id": "blue-bridgehead", "faction": "blue", "position": {"q": 12, "r": 9}, "strength": 120, "status": "ready", "posture": "maneuver"}, {"unit_id": "blue-screen", "faction": "blue", "position": {"q": 5, "r": 7}, "strength": 85, "status": "ready", "posture": "defend"}, {"unit_id": "blue-support", "faction": "blue", "position": {"q": 11, "r": 9}, "strength": 100, "status": "ready", "posture": "maneuver"}, {"unit_id": "red-reserve", "faction": "red", "position": {"q": 13, "r": 11}, "strength": 90, "status": "ready", "posture": "withdraw"}, {"unit_id": "red-riverline", "faction": "red", "position": {"q": 14, "r": 5}, "strength": 115, "status": "ready", "posture": "defend"}, {"unit_id": "red-town", "faction": "red", "position": {"q": 14, "r": 5}, "strength": 95, "status": "ready", "posture": "defend"}], "engaged_unit_ids": [], "moved_unit_ids": ["blue-bridgehead", "blue-support", "red-reserve"], "casualties_by_unit": {}, "combat_summary": "No localized engagements met contact or fire criteria this turn.", "winner": null, "notes": ["blue-bridgehead advanced to (12,9) via move.", "blue-support advanced to (11,9) via move.", "red-reserve advanced to (13,11) via withdraw.", "Combat skipped.", "Turn advanced."], "action_overlays": [{"unit_id": "blue-bridgehead", "faction": "blue", "action_type": "move", "origin": {"q": 12, "r": 8}, "target": {"q": 12, "r": 9}}, {"unit_id": "blue-support", "faction": "blue", "action_type": "move", "origin": {"q": 10, "r": 9}, "target": {"q": 11, "r": 9}}, {"unit_id": "red-reserve", "faction": "red", "action_type": "withdraw", "origin": {"q": 13, "r": 10}, "target": {"q": 13, "r": 11}}]}, {"turn": 10, "file_name": "turn_010.svg", "caption": "Turn 10 | blue=305 | red=300 | casualties=0", "units": [{"unit_id": "blue-bridgehead", "faction": "blue", "position": {"q": 13, "r": 9}, "strength": 120, "status": "ready", "posture": "maneuver"}, {"unit_id": "blue-screen", "faction": "blue", "position": {"q": 5, "r": 7}, "strength": 85, "status": "ready", "posture": "defend"}, {"unit_id": "blue-support", "faction": "blue", "position": {"q": 12, "r": 9}, "strength": 100, "status": "ready", "posture": "maneuver"}, {"unit_id": "red-reserve", "faction": "red", "position": {"q": 13, "r": 12}, "strength": 90, "status": "ready", "posture": "withdraw"}, {"unit_id": "red-riverline", "faction": "red", "position": {"q": 14, "r": 5}, "strength": 115, "status": "ready", "posture": "defend"}, {"unit_id": "red-town", "faction": "red", "position": {"q": 14, "r": 5}, "strength": 95, "status": "ready", "posture": "defend"}], "engaged_unit_ids": [], "moved_unit_ids": ["blue-bridgehead", "blue-support", "red-reserve"], "casualties_by_unit": {}, "combat_summary": "No localized engagements met contact or fire criteria this turn.", "winner": null, "notes": ["blue-bridgehead advanced to (13,9) via move.", "blue-support advanced to (12,9) via move.", "red-reserve advanced to (13,12) via withdraw.", "Combat skipped.", "Turn advanced."], "action_overlays": [{"unit_id": "blue-bridgehead", "faction": "blue", "action_type": "move", "origin": {"q": 12, "r": 9}, "target": {"q": 13, "r": 9}}, {"unit_id": "blue-support", "faction": "blue", "action_type": "move", "origin": {"q": 11, "r": 9}, "target": {"q": 12, "r": 9}}, {"unit_id": "red-reserve", "faction": "red", "action_type": "withdraw", "origin": {"q": 13, "r": 11}, "target": {"q": 13, "r": 12}}]}, {"turn": 11, "file_name": "turn_011.svg", "caption": "Turn 11 | blue=305 | red=300 | casualties=0", "units": [{"unit_id": "blue-bridgehead", "faction": "blue", "position": {"q": 13, "r": 10}, "strength": 120, "status": "ready", "posture": "maneuver"}, {"unit_id": "blue-screen", "faction": "blue", "position": {"q": 5, "r": 7}, "strength": 85, "status": "ready", "posture": "defend"}, {"unit_id": "blue-support", "faction": "blue", "position": {"q": 13, "r": 9}, "strength": 100, "status": "ready", "posture": "maneuver"}, {"unit_id": "red-reserve", "faction": "red", "position": {"q": 12, "r": 13}, "strength": 90, "status": "ready", "posture": "withdraw"}, {"unit_id": "red-riverline", "faction": "red", "position": {"q": 13, "r": 6}, "strength": 115, "status": "ready", "posture": "maneuver"}, {"unit_id": "red-town", "faction": "red", "position": {"q": 14, "r": 5}, "strength": 95, "status": "ready", "posture": "defend"}], "engaged_unit_ids": [], "moved_unit_ids": ["blue-bridgehead", "blue-support", "red-reserve", "red-riverline"], "casualties_by_unit": {}, "combat_summary": "No localized engagements met contact or fire criteria this turn.", "winner": null, "notes": ["blue-bridgehead advanced to (13,10) via move.", "blue-support advanced to (13,9) via move.", "red-reserve advanced to (12,13) via withdraw.", "red-riverline advanced to (13,6) via move.", "Combat skipped.", "Turn advanced."], "action_overlays": [{"unit_id": "blue-bridgehead", "faction": "blue", "action_type": "move", "origin": {"q": 13, "r": 9}, "target": {"q": 13, "r": 10}}, {"unit_id": "blue-support", "faction": "blue", "action_type": "move", "origin": {"q": 12, "r": 9}, "target": {"q": 13, "r": 9}}, {"unit_id": "red-reserve", "faction": "red", "action_type": "withdraw", "origin": {"q": 13, "r": 12}, "target": {"q": 12, "r": 13}}, {"unit_id": "red-riverline", "faction": "red", "action_type": "move", "origin": {"q": 14, "r": 5}, "target": {"q": 13, "r": 6}}]}, {"turn": 12, "file_name": "turn_012.svg", "caption": "Turn 12 | blue=305 | red=300 | casualties=0", "units": [{"unit_id": "blue-bridgehead", "faction": "blue", "position": {"q": 13, "r": 11}, "strength": 120, "status": "ready", "posture": "maneuver"}, {"unit_id": "blue-screen", "faction": "blue", "position": {"q": 5, "r": 7}, "strength": 85, "status": "ready", "posture": "defend"}, {"unit_id": "blue-support", "faction": "blue", "position": {"q": 13, "r": 9}, "strength": 100, "status": "ready", "posture": "defend"}, {"unit_id": "red-reserve", "faction": "red", "position": {"q": 12, "r": 14}, "strength": 90, "status": "ready", "posture": "withdraw"}, {"unit_id": "red-riverline", "faction": "red", "position": {"q": 13, "r": 7}, "strength": 115, "status": "ready", "posture": "maneuver"}, {"unit_id": "red-town", "faction": "red", "position": {"q": 14, "r": 5}, "strength": 95, "status": "ready", "posture": "defend"}], "engaged_unit_ids": [], "moved_unit_ids": ["blue-bridgehead", "red-reserve", "red-riverline"], "casualties_by_unit": {}, "combat_summary": "No localized engagements met contact or fire criteria this turn.", "winner": null, "notes": ["blue-bridgehead advanced to (13,11) via move.", "red-reserve advanced to (12,14) via withdraw.", "red-riverline advanced to (13,7) via move.", "Combat skipped.", "Turn advanced."], "action_overlays": [{"unit_id": "blue-bridgehead", "faction": "blue", "action_type": "move", "origin": {"q": 13, "r": 10}, "target": {"q": 13, "r": 11}}, {"unit_id": "red-reserve", "faction": "red", "action_type": "withdraw", "origin": {"q": 12, "r": 13}, "target": {"q": 12, "r": 14}}, {"unit_id": "red-riverline", "faction": "red", "action_type": "move", "origin": {"q": 13, "r": 6}, "target": {"q": 13, "r": 7}}]}, {"turn": 13, "file_name": "turn_013.svg", "caption": "Turn 13 | blue=305 | red=300 | casualties=0", "units": [{"unit_id": "blue-bridgehead", "faction": "blue", "position": {"q": 13, "r": 12}, "strength": 120, "status": "ready", "posture": "maneuver"}, {"unit_id": "blue-screen", "faction": "blue", "position": {"q": 5, "r": 7}, "strength": 85, "status": "ready", "posture": "defend"}, {"unit_id": "blue-support", "faction": "blue", "position": {"q": 14, "r": 9}, "strength": 100, "status": "ready", "posture": "withdraw"}, {"unit_id": "red-reserve", "faction": "red", "position": {"q": 12, "r": 14}, "strength": 90, "status": "ready", "posture": "defend"}, {"unit_id": "red-riverline", "faction": "red", "position": {"q": 13, "r": 8}, "strength": 115, "status": "ready", "posture": "maneuver"}, {"unit_id": "red-town", "faction": "red", "position": {"q": 14, "r": 5}, "strength": 95, "status": "ready", "posture": "defend"}], "engaged_unit_ids": [], "moved_unit_ids": ["blue-bridgehead", "blue-support", "red-riverline"], "casualties_by_unit": {}, "combat_summary": "No localized engagements met contact or fire criteria this turn.", "winner": null, "notes": ["blue-bridgehead advanced to (13,12) via move.", "blue-support advanced to (14,9) via withdraw.", "red-riverline advanced to (13,8) via move.", "Combat skipped.", "Turn advanced."], "action_overlays": [{"unit_id": "blue-bridgehead", "faction": "blue", "action_type": "move", "origin": {"q": 13, "r": 11}, "target": {"q": 13, "r": 12}}, {"unit_id": "blue-support", "faction": "blue", "action_type": "withdraw", "origin": {"q": 13, "r": 9}, "target": {"q": 14, "r": 9}}, {"unit_id": "red-riverline", "faction": "red", "action_type": "move", "origin": {"q": 13, "r": 7}, "target": {"q": 13, "r": 8}}]}, {"turn": 14, "file_name": "turn_014.svg", "caption": "Turn 14 | blue=305 | red=300 | casualties=0", "units": [{"unit_id": "blue-bridgehead", "faction": "blue", "position": {"q": 12, "r": 13}, "strength": 120, "status": "ready", "posture": "maneuver"}, {"unit_id": "blue-screen", "faction": "blue", "position": {"q": 5, "r": 7}, "strength": 85, "status": "ready", "posture": "defend"}, {"unit_id": "blue-support", "faction": "blue", "position": {"q": 14, "r": 10}, "strength": 100, "status": "ready", "posture": "withdraw"}, {"unit_id": "red-reserve", "faction": "red", "position": {"q": 13, "r": 14}, "strength": 90, "status": "ready", "posture": "withdraw"}, {"unit_id": "red-riverline", "faction": "red", "position": {"q": 13, "r": 9}, "strength": 115, "status": "ready", "posture": "maneuver"}, {"unit_id": "red-town", "faction": "red", "position": {"q": 14, "r": 5}, "strength": 95, "status": "ready", "posture": "defend"}], "engaged_unit_ids": [], "moved_unit_ids": ["blue-bridgehead", "blue-support", "red-reserve", "red-riverline"], "casualties_by_unit": {}, "combat_summary": "No localized engagements met contact or fire criteria this turn.", "winner": null, "notes": ["blue-bridgehead advanced to (12,13) via move.", "blue-support advanced to (14,10) via withdraw.", "red-reserve advanced to (13,14) via withdraw.", "red-riverline advanced to (13,9) via move.", "Combat skipped.", "Turn advanced."], "action_overlays": [{"unit_id": "blue-bridgehead", "faction": "blue", "action_type": "move", "origin": {"q": 13, "r": 12}, "target": {"q": 12, "r": 13}}, {"unit_id": "blue-support", "faction": "blue", "action_type": "withdraw", "origin": {"q": 14, "r": 9}, "target": {"q": 14, "r": 10}}, {"unit_id": "red-reserve", "faction": "red", "action_type": "withdraw", "origin": {"q": 12, "r": 14}, "target": {"q": 13, "r": 14}}, {"unit_id": "red-riverline", "faction": "red", "action_type": "move", "origin": {"q": 13, "r": 8}, "target": {"q": 13, "r": 9}}]}]}</script>
+  <script>
+    const replay = JSON.parse(document.getElementById("replay-data").textContent);
+    const frames = Array.isArray(replay.frames) ? replay.frames : [];
+    const slider = document.getElementById("turn-slider");
+    const turnLabel = document.getElementById("turn-label");
+    const frameTitle = document.getElementById("frame-title");
+    const frameNotes = document.getElementById("frame-notes");
+    const frameImg = document.getElementById("frame-img");
+    const playBtn = document.getElementById("play-btn");
+    let current = 0;
+    let timer = null;
+
+    slider.max = Math.max(frames.length - 1, 0);
+
+    function describe(frame) {
+      const lines = [];
+      if (frame.caption) lines.push(frame.caption);
+      if (frame.winner) lines.push(`winner: ${frame.winner}`);
+      const casualties = frame.casualties_by_unit || {};
+      const casualtyLines = Object.entries(casualties).map(([unitId, loss]) => `${unitId}: -${loss}`);
+      if (casualtyLines.length) {
+        lines.push("");
+        lines.push("casualties");
+        lines.push(...casualtyLines);
+      }
+      if (frame.combat_summary) {
+        lines.push("");
+        lines.push("combat");
+        lines.push(frame.combat_summary);
+      }
+      if (Array.isArray(frame.notes) && frame.notes.length) {
+        lines.push("");
+        lines.push("notes");
+        lines.push(...frame.notes);
+      }
+      return lines.join("\n");
+    }
+
+    function render(index) {
+      if (!frames.length) {
+        frameTitle.textContent = "No frames";
+        frameNotes.textContent = "This replay did not contain any turn snapshots.";
+        frameImg.removeAttribute("src");
+        turnLabel.textContent = "0 / 0";
+        return;
+      }
+      current = Math.min(Math.max(index, 0), frames.length - 1);
+      const frame = frames[current];
+      slider.value = String(current);
+      turnLabel.textContent = `${current + 1} / ${frames.length}`;
+      frameTitle.textContent = `Turn ${frame.turn}`;
+      frameNotes.textContent = describe(frame);
+      frameImg.src = frame.file_name;
+    }
+
+    function togglePlay() {
+      if (timer !== null) {
+        clearInterval(timer);
+        timer = null;
+        playBtn.textContent = "재생";
+        return;
+      }
+      playBtn.textContent = "정지";
+      timer = setInterval(() => {
+        if (current >= frames.length - 1) {
+          clearInterval(timer);
+          timer = null;
+          playBtn.textContent = "재생";
+          return;
+        }
+        render(current + 1);
+      }, 1200);
+    }
+
+    document.getElementById("prev-btn").addEventListener("click", () => render(current - 1));
+    document.getElementById("next-btn").addEventListener("click", () => render(current + 1));
+    document.getElementById("play-btn").addEventListener("click", togglePlay);
+    slider.addEventListener("input", (event) => render(Number(event.target.value)));
+
+    render(0);
+  </script>
+</body>
+</html>

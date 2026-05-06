@@ -18,7 +18,14 @@ from .metrics import (
     tactic_transition_frequency,
     win_rate,
 )
-from .plots import PlotBundle, build_experiment_plots
+from .plots import (
+    PlotBundle,
+    VisualizationBundle,
+    build_aggregate_visualizations,
+    build_battlefield_replay,
+    build_experiment_plots,
+    plot_parsing_success_by_agent,
+)
 from .stats import SummaryStatistics, summarize_runs
 
 __all__ = [
@@ -26,8 +33,11 @@ __all__ = [
     "MockWhiteCellMetricHook",
     "PlotBundle",
     "SummaryStatistics",
+    "VisualizationBundle",
     "aggregate_casualties_by_unit",
     "action_entropy",
+    "build_aggregate_visualizations",
+    "build_battlefield_replay",
     "build_experiment_plots",
     "combat_turn_count",
     "doctrine_compliance_rate",
@@ -37,6 +47,7 @@ __all__ = [
     "json_parsing_success_rate",
     "load_jsonl_records",
     "mean_remaining_force_ratio",
+    "plot_parsing_success_by_agent",
     "tactical_risk_score",
     "summarize_runs",
     "tactical_rationality_score",
